@@ -4,7 +4,9 @@ import com.emailapp.domain.User;
 
 public class AdminController {
 
-    public void showMenuForUser(User user) {
+    //TODO Similar methods as UserController but for User CRUD
 
+    public void showMenuForUser(User user) {
+        System.out.println("asdas");
     }
 }

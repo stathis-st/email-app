@@ -53,11 +53,11 @@ public class LoginController extends BaseController {
                     default:
                         break;
                 }
-            } catch (InvalidCredentialsException e) {
-                System.out.println(e.getMessage());
+            } catch (InvalidCredentialsException exception) {
+                exception.printStackTrace();
             }
+
         }
         System.out.println(FAILED_LOGIN_MESSAGE);
     }
-
 }

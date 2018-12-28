@@ -2,6 +2,7 @@ package com.emailapp.repository;
 
 import com.emailapp.datasource.Database;
 import com.emailapp.domain.Entity;
+import com.emailapp.exception.NotFoundException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,8 @@ import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 
 public interface CrudRepository<T extends Entity> {
@@ -67,7 +70,7 @@ public interface CrudRepository<T extends Entity> {
         return false;
     }
 
-    default T getOne(long id) {
+    default T getOne(long id) throws SQLException, NotFoundException {
         String selectStatement = String.format(SELECT_BY_ID_TEMPLATE, getTableName());
         try (Connection connection = database.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectStatement)) {
@@ -76,12 +79,11 @@ public interface CrudRepository<T extends Entity> {
                 resultSet.beforeFirst();
                 if (resultSet.next()) {
                     return extractEntityFromResultSet(resultSet);
+                } else {
+                    throw new NotFoundException(id);
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return null;
     }
 
     default List<T> getAll() {
@@ -110,6 +112,25 @@ public interface CrudRepository<T extends Entity> {
             e.printStackTrace();
         }
         return false;
+    }
+
+    default List<T> executeNativeSelectQuery(String query, Consumer<PreparedStatement> consumer, Function<ResultSet, T> mapper) {
+        List<T> entityList = new ArrayList<>();
+        try (Connection connection = database.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            consumer.accept(preparedStatement);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                resultSet.beforeFirst();
+                while (resultSet.next()) {
+                    entityList.add(mapper.apply(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return entityList;
     }
 
 }

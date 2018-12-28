@@ -1,5 +1,7 @@
 package com.emailapp.controller.user;
 
+import com.emailapp.controller.BaseController;
+import com.emailapp.controller.MenuProvider;
 import com.emailapp.domain.Message;
 import com.emailapp.domain.User;
 import com.emailapp.service.UserMessageService;
@@ -7,13 +9,15 @@ import com.emailapp.service.UserService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class UserController {
+public class UserController extends BaseController implements MenuProvider<User> {
 
     private static UserController userControllerInstance;
 
@@ -32,38 +36,11 @@ public class UserController {
     }
 
     public void showMenuForUser(User user) {
-        while (true) {
-            System.out.println("User: " + user.getUsername());
-            System.out.println("1. Received");
-            System.out.println("2. Sent");
-            System.out.println("3. Compose");
-            System.out.println("4. Logout");
-
-            Scanner scanner = new Scanner(System.in);
-
-            while (!scanner.hasNextInt()) {
-                System.out.print("That's not a number! Please enter a number from 1 to 4");
-                scanner.next();
-            }
-            int number = scanner.nextInt();
-
-            switch (number) {
-                case 1:
-                    showReceivedMessagesOfUser(user);
-                    break;
-                case 2:
-                    showSentMessagesOfUser(user);
-                    break;
-                case 3:
-                    composeMessage(user);
-                    break;
-                case 4:
-                    return;
-                default:
-                    System.out.println("Invalid selection");
-                    break;
-            }
-        }
+        Map<Integer, Consumer<User>> consumerMap = new HashMap<>();
+        consumerMap.put(1, e -> this.showReceivedMessagesOfUser(user));
+        consumerMap.put(2, e -> this.showSentMessagesOfUser(user));
+        consumerMap.put(3, e -> this.composeMessage(user));
+        provideSelectionMenu(consumerMap);
     }
 
     private void showReceivedMessagesOfUser(User user) {
@@ -97,6 +74,7 @@ public class UserController {
     }
 
     private void composeMessage(User fromUser) {
+        userService.deleteUser(userService.getAllUsers().get(0));
         List<User> users = userService.getAllUsers();
 
         String usernamesList = users.stream()
@@ -140,7 +118,12 @@ public class UserController {
         newMessage.setReceiver(receiverUserOptional.get());
         newMessage.setSender(fromUser);
 
-        long messageId = userMessageService.sendMessage(newMessage);
+        long messageId = 0;
+        try {
+            messageId = userMessageService.sendMessage(newMessage);
+        } catch (Exception e) {
+            handleException(e);
+        }
 
         if (messageId > 0) {
             System.out.println("Message sent!");
@@ -171,6 +154,14 @@ public class UserController {
                 return;
             }
         }
+    }
+
+    @Override
+    public void provideMenu() {
+        System.out.println("1. Received");
+        System.out.println("2. Sent");
+        System.out.println("3. Compose");
+        System.out.println("4. Logout");
     }
 }
 

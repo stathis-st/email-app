@@ -5,6 +5,9 @@ import com.emailapp.domain.UserMessage;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class UserMessageRepository implements CrudRepository<UserMessage> {
 
@@ -18,6 +21,8 @@ public class UserMessageRepository implements CrudRepository<UserMessage> {
 
     private static final String UPDATE_STATEMENT = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE `id` = ?",
             TABLE_NAME, COLUMN_USER_MESSAGES_MESSAGE_ID, COLUMN_USER_MESSAGE_USER_ID, COLUMN_USER_MESSAGE_MESSAGE_TYPE);
+
+    private static final String SELECT_USER_MESSAGES_BY_MESSAGE_ID = String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, COLUMN_USER_MESSAGES_MESSAGE_ID);
 
     @Override
     public String getTableName() {
@@ -53,7 +58,27 @@ public class UserMessageRepository implements CrudRepository<UserMessage> {
 
     @Override
     public void setUpdatePreparedStatement(UserMessage entity, PreparedStatement preparedStatement) throws SQLException {
-        setInsertPreparedStatement(entity,preparedStatement);
+        setInsertPreparedStatement(entity, preparedStatement);
         preparedStatement.setLong(4, entity.getId());
+    }
+
+    public List<UserMessage> getUserMessagesByMessageId(long messageId) {
+        Consumer<PreparedStatement> preparedStatementConsumer = preparedStatement -> {
+            try {
+                preparedStatement.setLong(1, messageId);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        };
+        Function<ResultSet, UserMessage> function = resultSet -> {
+            try {
+                return extractEntityFromResultSet(resultSet);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        };
+        return executeNativeSelectQuery(SELECT_USER_MESSAGES_BY_MESSAGE_ID, preparedStatementConsumer, function);
+
     }
 }
