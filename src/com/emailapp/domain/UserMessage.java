@@ -2,6 +2,9 @@ package com.emailapp.domain;
 
 public class UserMessage extends Entity {
 
+    public static final String SENT = "SENT";
+    public static final String RECEIVED = "RECEIVED";
+
     private long messageId;
     private long userId;
     private String messageType;

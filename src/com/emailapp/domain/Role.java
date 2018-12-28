@@ -3,18 +3,14 @@ package com.emailapp.domain;
 
 public class Role extends Entity {
 
+    public static final String ADMIN_TYPE = "admin";
+    public static final String USER_TYPE = "user";
 
     private String roleType;
     private String description;
 
     public Role() {
     }
-
-    public Role(String roleType, String description) {
-        this.roleType = roleType;
-        this.description = description;
-    }
-
 
     public String getRoleType() {
         return roleType;
@@ -23,7 +19,6 @@ public class Role extends Entity {
     public void setRoleType(String roleType) {
         this.roleType = roleType;
     }
-
 
     public String getDescription() {
         return description;

@@ -8,16 +8,11 @@ public class Message extends Entity {
     private String messageData;
     private String subject;
     private LocalDateTime dateOfSubmission;
+
     private User receiver;
     private User sender;
 
     public Message() {
-    }
-
-    public Message(String messageData, String subject, LocalDateTime dateOfSubmission) {
-        this.messageData = messageData;
-        this.subject = subject;
-        this.dateOfSubmission = dateOfSubmission;
     }
 
     public String getMessageData() {
@@ -62,7 +57,7 @@ public class Message extends Entity {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "Message" +
                 "messageData='" + messageData + '\'' +
                 ", subject='" + subject + '\'' +
                 ", dateOfSubmission=" + dateOfSubmission +

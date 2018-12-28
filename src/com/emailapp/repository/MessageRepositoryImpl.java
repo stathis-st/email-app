@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+
+import static com.emailapp.domain.UserMessage.RECEIVED;
+import static com.emailapp.domain.UserMessage.SENT;
 
 
 public class MessageRepositoryImpl implements MessageRepository {
@@ -26,19 +30,19 @@ public class MessageRepositoryImpl implements MessageRepository {
     private static final String UPDATE_STATEMENT = String.format("UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE `id` = ?",
             TABLE_NAME, COLUMN_MESSAGES_MESSAGE_DATA, COLUMN_MESSAGES_SUBJECT, COLUMN_MESSAGES_DATE_OF_SUBMISSION);
 
-    private static final String GET_RECEIVED_MESSAGES_STATEMENT =
+    private static final String GET_MESSAGES_STATEMENT_TEMPLATE =
             "SELECT mes.id, mes.message_data, mes.subject, mes.date_of_submission, us.id, us.username, us.lastname, us.firstname FROM messages mes" +
                     " INNER JOIN users_messages um" +
                     "  on mes.id = um.message_id" +
                     " INNER JOIN users us" +
                     "  on us.id = user_id" +
-                    " WHERE um.message_type = 'SENT'" +
+                    " WHERE um.message_type = '%s'" +
                     " AND mes.id in" +
                     " (SELECT message_id" +
                     " FROM messages" +
                     "       INNER JOIN users_messages um2" +
                     "                  ON messages.id = um2.message_id" +
-                    "                    AND message_type = 'RECEIVED'" +
+                    "                    AND message_type = '%s'" +
                     "WHERE user_id = ?)";
 
     @Override
@@ -79,29 +83,10 @@ public class MessageRepositoryImpl implements MessageRepository {
         preparedStatement.setLong(4, message.getId());
     }
 
-
-    @Override
-    public List<Message> getReceivedMessagesByUser(long userId) {
-        List<Message> messages = new ArrayList<>();
-        try (Connection connection = database.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_RECEIVED_MESSAGES_STATEMENT)) {
-            preparedStatement.setLong(1, userId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                resultSet.beforeFirst();
-                while (resultSet.next()) {
-                    messages.add(extractMessageWithUserFromResultSet(resultSet));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return messages;
-    }
-
-    private Message extractMessageWithUserFromResultSet(ResultSet resultSet) throws SQLException {
+    private Message extractMessageWithUserFromResultSet(ResultSet resultSet, BiConsumer<Message, User> biConsumer) throws SQLException {
         Message message = extractEntityFromResultSet(resultSet);
         User user = extractUserFromResultSet(resultSet);
-        message.setSender(user);
+        biConsumer.accept(message, user);
         return message;
     }
 
@@ -114,9 +99,30 @@ public class MessageRepositoryImpl implements MessageRepository {
         return user;
     }
 
+    @Override
+    public List<Message> getReceivedMessagesByUser(long userId) {
+        return getMessages(userId, String.format(GET_MESSAGES_STATEMENT_TEMPLATE, SENT, RECEIVED), Message::setSender);
+    }
 
     @Override
     public List<Message> getSentMessagesByUser(long userId) {
-        return null;
+        return getMessages(userId, String.format(GET_MESSAGES_STATEMENT_TEMPLATE, RECEIVED, SENT), Message::setReceiver);
+    }
+
+    private List<Message> getMessages(long userId, String query, BiConsumer<Message, User> biConsumer) {
+        List<Message> messages = new ArrayList<>();
+        try (Connection connection = database.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                resultSet.beforeFirst();
+                while (resultSet.next()) {
+                    messages.add(extractMessageWithUserFromResultSet(resultSet, biConsumer));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return messages;
     }
 }

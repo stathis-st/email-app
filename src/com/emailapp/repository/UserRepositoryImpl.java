@@ -1,6 +1,7 @@
 package com.emailapp.repository;
 
 import com.emailapp.domain.User;
+import com.emailapp.exception.InvalidCredentialsException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,25 +67,23 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getUserByUsernameAndPassword(String username, String password) {
-
-
+    public User getUserByUsernameAndPassword(String username, String password) throws InvalidCredentialsException {
         try (Connection connection = database.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME_AND_PASSWORD)) {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
-
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 resultSet.beforeFirst();
                 if (resultSet.next()) {
                     return extractEntityFromResultSet(resultSet);
+                } else {
+                    throw new InvalidCredentialsException();
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-
     }
 
 }

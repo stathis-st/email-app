@@ -2,6 +2,7 @@ package com.emailapp.repository;
 
 import com.emailapp.domain.UserRole;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,9 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 
     private static final String UPDATE_STATEMENT = String.format("UPDATE %s SET %s = ?, %s = ? WHERE `id` = ?",
             TABLE_NAME, COLUMN_USERS_ROLES_USERS_ID, COLUMN_USERS_ROLES_ROLES_ID);
+
+    private static final String SELECT_USER_ROLE_BY_USER_ID = String.format("SELECT * FROM %s WHERE %s = ?",
+            TABLE_NAME, COLUMN_USERS_ROLES_USERS_ID);
 
     @Override
     public String getTableName() {
@@ -52,5 +56,22 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
     public void setUpdatePreparedStatement(UserRole userRole, PreparedStatement preparedStatement) throws SQLException {
         setInsertPreparedStatement(userRole, preparedStatement);
         preparedStatement.setLong(3, userRole.getId());
+    }
+
+    @Override
+    public UserRole getRoleIdByUserId(Long userId) {
+        try (Connection connection = database.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ROLE_BY_USER_ID)) {
+            preparedStatement.setLong(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                resultSet.beforeFirst();
+                if (resultSet.next()) {
+                    return extractEntityFromResultSet(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
