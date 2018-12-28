@@ -1,12 +1,15 @@
 package com.emailapp.individualproject;
 
 import com.emailapp.domain.User;
-import com.emailapp.repositories.UserRepositoryImpl;
+import com.emailapp.repository.UserRepositoryImpl;
 
 import java.io.Console;
 import java.util.Scanner;
 
 public class LoginRegister {
+
+    UserRepositoryImpl userDAO = new UserRepositoryImpl();
+
 
     public static final String WELCOME_MESSAGE = "Welcome to the email application";
 
@@ -66,7 +69,6 @@ public class LoginRegister {
         }
 
 
-        UserRepositoryImpl userDAO = new UserRepositoryImpl();
 
         User user = userDAO.getUserByUsernameAndPassword(username, password);
 

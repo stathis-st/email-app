@@ -3,7 +3,7 @@ package com.emailapp.domain;
 
 public class Role extends Entity {
 
-    private long id;
+
     private String roleType;
     private String description;
 
@@ -13,14 +13,6 @@ public class Role extends Entity {
     public Role(String roleType, String description) {
         this.roleType = roleType;
         this.description = description;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
 

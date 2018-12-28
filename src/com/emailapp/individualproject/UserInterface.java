@@ -2,26 +2,25 @@ package com.emailapp.individualproject;
 
 import com.emailapp.domain.Message;
 import com.emailapp.domain.User;
-import com.emailapp.repositories.MessageRepositoryImpl;
-import com.emailapp.repositories.UserRepositoryImpl;
+import com.emailapp.repository.MessageRepositoryImpl;
+import com.emailapp.repository.UserRepositoryImpl;
+import com.emailapp.service.UserMessageService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
 
     private User user;
-
-    public UserInterface() {
-    }
+    private UserMessageService userMessageService = new UserMessageService();
 
     public UserInterface(User user) {
         this.user = user;
     }
 
     void showMenu() {
-
         System.out.println("1. Inbox");
         System.out.println("2. Sent");
         System.out.println("3. Compose");
@@ -50,23 +49,23 @@ public class UserInterface {
             default:
                 break;
         }
-
-
     }
 
-    public void showInbox() {
+    private void showInbox() {
+        User foundUser = userMessageService.getUserWithReceivedMessages(user.getId());
+        printMessages(foundUser.getReceivedMessages());
+    }
 
-        MessageRepositoryImpl msgDAO = new MessageRepositoryImpl();
-
-        ArrayList<StringBuilder> inbox = msgDAO.getUserInbox(this.user.getId());
-
-        for (StringBuilder message : inbox) {
+    private void printMessages(List<Message> inbox) {
+        for (Message message : inbox) {
             System.out.println(message);
         }
-
-        System.out.println("Type '0' to go back");
-
         Scanner scanner = new Scanner(System.in);
+        selectNumber(scanner);
+    }
+
+    private void selectNumber(Scanner scanner) {
+        System.out.println("Type '0' to go back");
 
         while (!scanner.hasNextInt()) {
             System.out.print("That's not a number! ");
@@ -83,25 +82,9 @@ public class UserInterface {
 
         MessageRepositoryImpl msgDAO = new MessageRepositoryImpl();
 
-        ArrayList<StringBuilder> sent = msgDAO.getUserSent(this.user.getId());
+        List<Message> sent = msgDAO.getSentMessagesByUser(this.user.getId());
 
-        for (StringBuilder message : sent) {
-            System.out.println(message);
-        }
-
-        System.out.println("Type '0' to go back");
-
-        Scanner scanner = new Scanner(System.in);
-
-        while (!scanner.hasNextInt()) {
-            System.out.print("That's not a number! ");
-            scanner.next();
-        }
-        int number = scanner.nextInt();
-
-        if (number == 0) {
-            showMenu();
-        }
+        printMessages(sent);
 
     }
 
@@ -113,7 +96,7 @@ public class UserInterface {
 
         MessageRepositoryImpl msgDAO = new MessageRepositoryImpl();
 
-        ArrayList<User> users = userDAO.getAll();
+        List<User> users = userDAO.getAll();
 
         ArrayList<String> userNames = new ArrayList<>();
 
@@ -152,7 +135,7 @@ public class UserInterface {
 
         long senderId = this.user.getId();
 
-        Message newMessage = new Message(senderId, receiverId, false, false, message, subject, LocalDateTime.now());
+        Message newMessage = new Message(message, subject, LocalDateTime.now());
 
         long messageId = msgDAO.save(newMessage);
 
@@ -162,18 +145,7 @@ public class UserInterface {
             System.out.println("Failed to send the message");
         }
 
-        System.out.println("Type '0' to go back");
-
-        while (!scanner.hasNextInt()) {
-            System.out.print("That's not a number! ");
-            scanner.next();
-        }
-        int number = scanner.nextInt();
-
-        if (number == 0) {
-            showMenu();
-        }
-
+        selectNumber(scanner);
     }
 
     public void logout() {

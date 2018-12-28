@@ -3,7 +3,6 @@ package com.emailapp.domain;
 
 public class UserRole extends Entity {
 
-    private long id;
     private long usersId;
     private long rolesId;
 
@@ -13,14 +12,6 @@ public class UserRole extends Entity {
     public UserRole(long usersId, long rolesId) {
         this.usersId = usersId;
         this.rolesId = rolesId;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
 
@@ -40,5 +31,4 @@ public class UserRole extends Entity {
     public void setRolesId(long rolesId) {
         this.rolesId = rolesId;
     }
-
 }

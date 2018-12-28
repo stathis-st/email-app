@@ -1,23 +1,13 @@
 package com.emailapp.individualproject;
 
-import com.emailapp.datasource.Database;
-import com.emailapp.repositories.MessageRepositoryImpl;
-import com.emailapp.repositories.RoleRepositoryImpl;
-import com.emailapp.repositories.UserRoleRepositoryImpl;
-
-import java.io.Console;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class TestingClass {
 
 //    public static void main(String[] args) {
 
 
-        //test db connection
-//        Database db = Database.getInstance();
-//        db.connectionTest();
+        //test database connection
+//        Database database = Database.getInstance();
+//        database.connectionTest();
 
         //testing UserRepositoryImpl
 

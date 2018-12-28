@@ -5,90 +5,70 @@ import java.time.LocalDateTime;
 
 public class Message extends Entity {
 
-  private long id;
-  private long senderId;
-  private long receiverId;
-  private boolean deletedFromSender;
-  private boolean deletedFromReceiver;
-  private String messageData;
-  private String subject;
-  private LocalDateTime dateOfSubmission;
+    private String messageData;
+    private String subject;
+    private LocalDateTime dateOfSubmission;
+    private User receiver;
+    private User sender;
 
-  public Message() {
-  }
+    public Message() {
+    }
 
-  public Message(long senderId, long receiverId, boolean deletedFromSender, boolean deletedFromReceiver, String messageData,
-                 String subject, LocalDateTime dateOfSubmission) {
-    this.senderId = senderId;
-    this.receiverId = receiverId;
-    this.deletedFromSender = deletedFromSender;
-    this.deletedFromReceiver = deletedFromReceiver;
-    this.messageData = messageData;
-    this.subject = subject;
-    this.dateOfSubmission = dateOfSubmission;
-  }
+    public Message(String messageData, String subject, LocalDateTime dateOfSubmission) {
+        this.messageData = messageData;
+        this.subject = subject;
+        this.dateOfSubmission = dateOfSubmission;
+    }
 
-  public long getId() {
-    return id;
-  }
+    public String getMessageData() {
+        return messageData;
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    public void setMessageData(String messageData) {
+        this.messageData = messageData;
+    }
 
-  public long getSenderId() {
-    return senderId;
-  }
+    public String getSubject() {
+        return subject;
+    }
 
-  public void setSenderId(long senderId) {
-    this.senderId = senderId;
-  }
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-  public long getReceiverId() {
-    return receiverId;
-  }
+    public LocalDateTime getDateOfSubmission() {
+        return dateOfSubmission;
+    }
 
-  public void setReceiverId(long receiverId) {
-    this.receiverId = receiverId;
-  }
+    public void setDateOfSubmission(LocalDateTime dateOfSubmission) {
+        this.dateOfSubmission = dateOfSubmission;
+    }
 
-  public boolean isDeletedFromSender() {
-    return deletedFromSender;
-  }
+    public User getReceiver() {
+        return receiver;
+    }
 
-  public void setDeletedFromSender(boolean deletedFromSender) {
-    this.deletedFromSender = deletedFromSender;
-  }
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+    }
 
-  public boolean isDeletedFromReceiver() {
-    return deletedFromReceiver;
-  }
+    public User getSender() {
+        return sender;
+    }
 
-  public void setDeletedFromReceiver(boolean deletedFromReceiver) {
-    this.deletedFromReceiver = deletedFromReceiver;
-  }
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
 
-  public String getMessageData() {
-    return messageData;
-  }
-
-  public void setMessageData(String messageData) {
-    this.messageData = messageData;
-  }
-
-  public String getSubject() {
-    return subject;
-  }
-
-  public void setSubject(String subject) {
-    this.subject = subject;
-  }
-
-  public LocalDateTime getDateOfSubmission() {
-    return dateOfSubmission;
-  }
-
-  public void setDateOfSubmission(LocalDateTime dateOfSubmission) {
-    this.dateOfSubmission = dateOfSubmission;
-  }
+    @Override
+    public String toString() {
+        return "Message{" +
+                "messageData='" + messageData + '\'' +
+                ", subject='" + subject + '\'' +
+                ", dateOfSubmission=" + dateOfSubmission +
+                ", receiver=" + receiver +
+                ", sender=" + sender +
+                ", id=" + id +
+                '}';
+    }
 }

@@ -1,30 +1,37 @@
 package com.emailapp.individualproject;
 
 
+import com.emailapp.repository.*;
+
 public class EmailApplication {
 
-//    static Database db;
+    private static final UserRepository userRepository = new UserRepositoryImpl();
+    private static final MessageRepository messageRepostory = new MessageRepositoryImpl();
+    private static final RoleRepository roleRepository = new RoleRepositoryImpl();
+    private static final UserRoleRepository userRoleRepository = new UserRoleRepositoryImpl();
+
+//    static Database database;
 //    User admin;
 //
 //    public EmailApplication() {
-//        db = new Database();
+//        database = new Database();
 //        admin = new User(); // make a User() constructor to initialize admin
 //    }
 
     public static void main(String[] args) {
 //        EmailApplication app = new EmailApplication();
-////        db.connectionTest(true);
+////        database.connectionTest(true);
 //
-//        if (!db.openConnection()) {
+//        if (!database.openConnection()) {
 //            System.out.println("Can't open emailapp.datasource");
 //            return;
 //        }
 //
 //        User user = new User();
-//        user.createUser(db, "user1", "user1", "Maria", "Maria");
-////        user.id = user.saveUser(db, "user1", "user1", "Maria", "Maria");
+//        user.createUser(database, "user1", "user1", "Maria", "Maria");
+////        user.id = user.saveUser(database, "user1", "user1", "Maria", "Maria");
 //
-//        db.closeConnection();
+//        database.closeConnection();
 
         LoginRegister loginRegister = new LoginRegister();
         loginRegister.welcome();
