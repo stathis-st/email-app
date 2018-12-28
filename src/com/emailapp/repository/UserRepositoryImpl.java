@@ -69,21 +69,21 @@ public class UserRepositoryImpl implements UserRepository {
     public User getUserByUsernameAndPassword(String username, String password) {
 
 
-            try (Connection connection = database.getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME_AND_PASSWORD)) {
-                preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
+        try (Connection connection = database.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME_AND_PASSWORD)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
 
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    resultSet.beforeFirst();
-                    if (resultSet.next()) {
-                        return extractEntityFromResultSet(resultSet);
-                    }
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                resultSet.beforeFirst();
+                if (resultSet.next()) {
+                    return extractEntityFromResultSet(resultSet);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
-            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
 
     }
 

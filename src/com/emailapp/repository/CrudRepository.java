@@ -3,7 +3,11 @@ package com.emailapp.repository;
 import com.emailapp.datasource.Database;
 import com.emailapp.domain.Entity;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;

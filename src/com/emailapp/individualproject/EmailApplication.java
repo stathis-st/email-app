@@ -1,7 +1,14 @@
 package com.emailapp.individualproject;
 
 
-import com.emailapp.repository.*;
+import com.emailapp.repository.MessageRepository;
+import com.emailapp.repository.MessageRepositoryImpl;
+import com.emailapp.repository.RoleRepository;
+import com.emailapp.repository.RoleRepositoryImpl;
+import com.emailapp.repository.UserRepository;
+import com.emailapp.repository.UserRepositoryImpl;
+import com.emailapp.repository.UserRoleRepository;
+import com.emailapp.repository.UserRoleRepositoryImpl;
 
 public class EmailApplication {
 
@@ -35,8 +42,6 @@ public class EmailApplication {
 
         LoginRegister loginRegister = new LoginRegister();
         loginRegister.welcome();
-
-
 
 
     }

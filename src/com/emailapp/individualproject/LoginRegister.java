@@ -14,7 +14,6 @@ public class LoginRegister {
     public static final String WELCOME_MESSAGE = "Welcome to the email application";
 
 
-
     public void welcome() {
         System.out.println(WELCOME_MESSAGE);
 
@@ -67,7 +66,6 @@ public class LoginRegister {
         } else {
             password = new String(console.readPassword("Password: "));
         }
-
 
 
         User user = userDAO.getUserByUsernameAndPassword(username, password);

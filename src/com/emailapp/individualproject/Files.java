@@ -1,6 +1,10 @@
 package com.emailapp.individualproject;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +31,7 @@ public class Files {
 
         try {
             File f = new File(fileName);
-            if(f.exists() && !f.isDirectory()) {
+            if (f.exists() && !f.isDirectory()) {
                 LogFile = new PrintWriter(new FileOutputStream(new File(fileName), true));
                 result = true;
             } else {
