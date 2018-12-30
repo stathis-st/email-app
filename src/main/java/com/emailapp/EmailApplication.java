@@ -1,4 +1,4 @@
-package com.emailapp.individualproject;
+package com.emailapp;
 
 
 import com.emailapp.controller.HomeController;
@@ -6,6 +6,6 @@ import com.emailapp.controller.HomeController;
 public class EmailApplication {
 
     public static void main(String[] args) {
-        new HomeController().welcome();
+        new HomeController().getHomeView();
     }
 }

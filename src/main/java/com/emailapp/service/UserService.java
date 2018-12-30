@@ -7,6 +7,7 @@ import com.emailapp.domain.UserMessage;
 import com.emailapp.domain.UserRole;
 import com.emailapp.exception.InvalidCredentialsException;
 import com.emailapp.exception.NotFoundException;
+import com.emailapp.exception.user.UserPersistenceException;
 import com.emailapp.repository.RoleRepository;
 import com.emailapp.repository.RoleRepositoryImpl;
 import com.emailapp.repository.UserRepository;
@@ -29,7 +30,7 @@ public class UserService {
 
     public User login(String username, String password) throws InvalidCredentialsException {
         User user = userRepository.getUserByUsernameAndPassword(username, password);
-        UserRole userRole = userRoleRepository.getRoleIdByUserId(user.getId());
+        UserRole userRole = userRoleRepository.getUserRoleIdByUserId(user.getId());
         try {
             Role role = roleRepository.getOne(userRole.getRolesId());
             user.setRole(role);
@@ -43,9 +44,19 @@ public class UserService {
         return userRepository.getAll();
     }
 
+    public User getUserById(long id) throws NotFoundException, SQLException {
+        return userRepository.getOne(id);
+    }
+
+    public void saveUser(User user) throws UserPersistenceException {
+        if (userRepository.save(user) < 1) {
+            throw new UserPersistenceException(user.getUsername(), user.getFirstName(), user.getLastName());
+        }
+    }
+
     public boolean deleteUser(User user) {
         //delete userRole
-        UserRole userRole = userRoleRepository.getRoleIdByUserId(user.getId());
+        UserRole userRole = userRoleRepository.getUserRoleIdByUserId(user.getId());
         userRoleRepository.delete(userRole);
 
         //get messages
@@ -64,5 +75,7 @@ public class UserService {
 
         return userRepository.delete(user);
     }
+
+
 
 }

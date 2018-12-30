@@ -59,7 +59,7 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
     }
 
     @Override
-    public UserRole getRoleIdByUserId(Long userId) {
+    public UserRole getUserRoleIdByUserId(Long userId) {
         try (Connection connection = database.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ROLE_BY_USER_ID)) {
             preparedStatement.setLong(1, userId);
