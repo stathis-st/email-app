@@ -14,18 +14,20 @@ public class HomeView implements BaseView, MenuProvider {
 
     private LoginController loginController = new LoginController();
 
+    @Override
     public void render() {
-        System.out.println(WELCOME_MESSAGE);
-        Map<Long, String> availableOptions = new HashMap<>();
-        availableOptions.put(1L, LOGIN_OPTION);
-        availableOptions.put(2L, EXIT_THE_APPLICATION_OPTION);
+        while (true) {
+            System.out.println(WELCOME_MESSAGE);
+            Map<Long, String> availableOptions = new HashMap<>();
+            availableOptions.put(1L, LOGIN_OPTION);
+            availableOptions.put(2L, EXIT_THE_APPLICATION_OPTION);
+            long choice = provideSelectionMenu(availableOptions);
 
-        long choice = provideSelectionMenu(availableOptions);
-
-        if (choice == 1) {
-            loginController.getLoginView();
-        } else if (choice == 2) {
-            System.exit(0);
+            if (choice == 1) {
+                loginController.getLoginView();
+            } else if (choice == 2) {
+                return;
+            }
         }
     }
 }

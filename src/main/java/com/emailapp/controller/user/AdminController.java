@@ -7,6 +7,7 @@ import com.emailapp.exception.user.UserPersistenceException;
 import com.emailapp.service.UserService;
 import com.emailapp.view.admin.AdminDashboardView;
 import com.emailapp.view.admin.DeleteUserView;
+import com.emailapp.view.admin.EditUserView;
 import com.emailapp.view.admin.RegisteredUsersView;
 import com.emailapp.view.admin.UserRegistrationView;
 
@@ -43,14 +44,22 @@ public class AdminController implements BaseController {
 
     public void getUserDeleteView(User sessionUser) {
         List<User> registeredUsers = userService.getAllUsers();
-        //remove self
+        //TODO remove self with sessionUser
         new DeleteUserView(sessionUser, registeredUsers).render();
     }
 
 
-    public void deleteUser(long userId) throws NotFoundException, SQLException {
+    public void deleteUser(User sessionUser, long userId) throws NotFoundException, SQLException {
         User userToDelete = userService.getUserById(userId);
         userService.deleteUser(userToDelete);
     }
 
+    public void getUserEditView(User sessionUser) {
+        List<User> registeredUsers = userService.getAllUsers();
+        new EditUserView(sessionUser, registeredUsers).render();
+    }
+
+    public void postEditUser(User sessionUser, User chosenUser) throws NotFoundException, SQLException {
+        userService.editUser(chosenUser);
+    }
 }

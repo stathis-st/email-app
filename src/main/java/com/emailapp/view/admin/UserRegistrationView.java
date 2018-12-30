@@ -4,14 +4,14 @@ import com.emailapp.domain.User;
 import com.emailapp.exception.ExceptionResolver;
 import com.emailapp.view.BaseView;
 import com.emailapp.view.functionality.MenuProvider;
+import com.emailapp.view.functionality.UserEditor;
 
-import java.io.Console;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UserRegistrationView extends AdminDashboardView implements BaseView, MenuProvider, ExceptionResolver {
+public class UserRegistrationView extends AdminDashboardView implements BaseView, MenuProvider, UserEditor, ExceptionResolver {
 
     private Set<String> registeredUserNames;
 
@@ -47,20 +47,5 @@ public class UserRegistrationView extends AdminDashboardView implements BaseView
             username = scanner.nextLine();
         }
         return username;
-    }
-
-    private String extractPassword(Scanner scanner) {
-        Console console = System.console();
-        if (console == null) {
-            System.out.print("Password: ");
-            return scanner.nextLine();
-        } else {
-            return new String(console.readPassword("Password: "));
-        }
-    }
-
-    private String extractName(Scanner scanner, String renderedOutput) {
-        System.out.print("Last Name: ");
-        return scanner.nextLine();
     }
 }

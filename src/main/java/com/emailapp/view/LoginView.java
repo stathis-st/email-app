@@ -33,6 +33,7 @@ public class LoginView implements BaseView {
                 }
 
                 new LoginController().postFromLoginView(username, password);
+                return;
             } catch (InvalidCredentialsException ex) {
                 System.out.println(ex.getMessage());
             }

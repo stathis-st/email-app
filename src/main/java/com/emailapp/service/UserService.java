@@ -77,5 +77,8 @@ public class UserService {
     }
 
 
-
+    public void editUser(User chosenUser) throws NotFoundException, SQLException {
+        getUserById(chosenUser.getId());
+        userRepository.update(chosenUser);
+    }
 }

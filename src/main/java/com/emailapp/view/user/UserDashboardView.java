@@ -35,7 +35,7 @@ public class UserDashboardView implements BaseView, MenuProvider {
             } else if (choice == 3) {
                 userController.getComposeMessageView(sessionUser);
             } else if (choice == 4) {
-                System.exit(0);
+                return;
             }
         }
     }

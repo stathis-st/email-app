@@ -34,11 +34,11 @@ public class AdminDashboardView implements BaseView, MenuProvider {
             } else if (choice == 2) {
                 adminController.showAllUsers(sessionUser);
             } else if (choice == 3) {
-                //adminController.getUserEditView();
+                adminController.getUserEditView(sessionUser);
             } else if (choice == 4) {
                 adminController.getUserDeleteView(sessionUser);
             } else if (choice == 5) {
-                System.exit(0);
+                return;
             }
         }
     }
