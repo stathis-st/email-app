@@ -54,6 +54,7 @@ public class UserMessageService {
         userRepository.getOne(message.getSender().getId());
 
         long id = messageRepository.save(message);
+        message.setId(id);
 
         UserMessage sentMessage = new UserMessage();
         sentMessage.setMessageId(id);
