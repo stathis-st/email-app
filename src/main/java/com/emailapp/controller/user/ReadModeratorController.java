@@ -4,7 +4,6 @@ import com.emailapp.controller.BaseController;
 import com.emailapp.domain.Message;
 import com.emailapp.domain.User;
 import com.emailapp.service.UserMessageService;
-import com.emailapp.view.moderator.ModeratorDashboardView;
 
 import java.util.List;
 
@@ -14,6 +13,7 @@ public class ReadModeratorController implements BaseController {
 
     public void getBaseModeratorView(User sessionView) {
         List<Message> messages = userMessageService.getAllMessages();
-        new ModeratorDashboardView(sessionView, messages).render();
+        //TODO uncomment the line below!
+//        new ModeratorDashboardView(sessionView, messages).render();
     }
 }

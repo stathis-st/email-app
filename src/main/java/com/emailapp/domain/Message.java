@@ -1,7 +1,9 @@
 package com.emailapp.domain;
 
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Message extends Entity implements FileEntity{
 
@@ -11,6 +13,10 @@ public class Message extends Entity implements FileEntity{
 
     private User receiver;
     private User sender;
+
+    private String DATE_TIME_PATTERN = "dd-MM-yyyy HH:mm:ss";
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+
 
     public Message() {
     }
@@ -67,11 +73,26 @@ public class Message extends Entity implements FileEntity{
 
     @Override
     public String getContent() {
-        return this.toString();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.id).append(",")
+                .append(subject).append(",")
+                .append(messageData).append(",")
+                .append(sender.getFirstName()).append(" ").append(sender.getLastName()).append(",")
+                .append(receiver.getFirstName()).append(" ").append(receiver.getLastName()).append(",")
+                .append(dateOfSubmission.format(formatter));
+
+        return stringBuilder.toString();
     }
 
     @Override
     public String getBaseDirectory() {
-        return "D:\\JavaPrograms\\email-app\\messages\\";
+
+        StringBuilder path = new StringBuilder();
+        path.append(".")
+                .append(File.separator)
+                .append("messages")
+                .append(File.separator);
+
+        return path.toString();
     }
 }

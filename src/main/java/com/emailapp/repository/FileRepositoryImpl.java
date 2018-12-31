@@ -2,9 +2,10 @@ package com.emailapp.repository;
 
 import com.emailapp.domain.FileEntity;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,15 +18,31 @@ public class FileRepositoryImpl implements FileRepository {
         StringBuilder filePath = new StringBuilder();
         filePath.append(fileEntity.getBaseDirectory())
                 .append(DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now()))
-                .append(".txt");
+                .append(".csv");
 
-        File file = new File(filePath.toString());
+        StringBuilder header = new StringBuilder();
+        header.append("Message Id").append(",")
+                .append("Subject").append(",")
+                .append("Message content").append(",")
+                .append("From").append(",")
+                .append("To").append(",")
+                .append("Date of submission");
 
-        try {
-            PrintWriter printWriter = new PrintWriter(new FileOutputStream(file, true));
+        File messagesFile = new File(filePath.toString());
+
+        try (FileWriter fileWriter = new FileWriter(messagesFile, true);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+             PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
+
+            if (messagesFile.length() == 0) {
+                printWriter.println(header);
+            }
+
             printWriter.println(fileEntity.getContent());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
+
     }
 }
