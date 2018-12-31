@@ -13,7 +13,9 @@ import com.emailapp.repository.UserRepository;
 import com.emailapp.repository.UserRepositoryImpl;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.emailapp.domain.UserMessage.RECEIVED;
 import static com.emailapp.domain.UserMessage.SENT;
@@ -35,6 +37,17 @@ public class UserMessageService {
         List<Message> sentMessages = messageRepository.getSentMessagesByUser(user.getId());
         user.setSentMessages(sentMessages);
         return user;
+    }
+
+    public List<Message> getAllMessages() {
+        return userRepository.getAll().stream()
+                .map(user -> {
+                   List<Message> messages = messageRepository.getReceivedMessagesByUser(user.getId());
+                   messages.forEach(message -> message.setReceiver(user));
+                   return messages;
+                })
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     public long sendMessage(Message message) throws NotFoundException, SQLException {
@@ -73,4 +86,10 @@ public class UserMessageService {
         return messageRepository.delete(message);
     }
 
+    public void deleteMessageById(long chosenId) throws NotFoundException, SQLException {
+        Message message = messageRepository.getOne(chosenId);
+        List<UserMessage> userMessages = getUserMessagesByMessage(message);
+        userMessages.forEach(this::deleteUserMessage);
+        deleteMessage(message);
+    }
 }

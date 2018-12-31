@@ -28,7 +28,7 @@ public class DeleteUserView implements BaseView, MenuProvider, ExceptionResolver
                 .collect(Collectors.toMap(User::getId, User::getUsername));
         long chosenId = provideSelectionMenu(availableUsersToDelete);
         try {
-            new AdminController().deleteUser(sessionUser, chosenId);
+            adminController.deleteUser(sessionUser, chosenId);
             System.out.println("Successfully deleted user with id " + chosenId);
         } catch (Exception e) {
             handleException(e);

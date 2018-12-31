@@ -1,6 +1,7 @@
 package com.emailapp.view.admin;
 
 import com.emailapp.controller.user.AdminController;
+import com.emailapp.controller.user.ReadModeratorController;
 import com.emailapp.domain.User;
 import com.emailapp.view.BaseView;
 import com.emailapp.view.functionality.MenuProvider;
@@ -13,6 +14,7 @@ public class AdminDashboardView implements BaseView, MenuProvider {
     protected User sessionUser;
 
     protected AdminController adminController = new AdminController();
+    private ReadModeratorController readModeratorController = new ReadModeratorController();
 
     public AdminDashboardView(User sessionUser) {
         this.sessionUser = sessionUser;
@@ -26,7 +28,8 @@ public class AdminDashboardView implements BaseView, MenuProvider {
         availableOptions.put(2L, "View all users");
         availableOptions.put(3L, "Edit User's info");
         availableOptions.put(4L, "Delete User");
-        availableOptions.put(5L, "Logout");
+        availableOptions.put(5L, "Manage Messages");
+        availableOptions.put(6L, "Logout");
         while (true) {
             long choice = provideSelectionMenu(availableOptions);
             if (choice == 1) {
@@ -38,8 +41,11 @@ public class AdminDashboardView implements BaseView, MenuProvider {
             } else if (choice == 4) {
                 adminController.getUserDeleteView(sessionUser);
             } else if (choice == 5) {
+                readModeratorController.getBaseModeratorView(sessionUser);
+            } else if (choice == 6) {
                 return;
             }
         }
     }
+
 }

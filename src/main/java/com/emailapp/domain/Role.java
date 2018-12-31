@@ -3,8 +3,11 @@ package com.emailapp.domain;
 
 public class Role extends Entity {
 
-    public static final String ADMIN_TYPE = "ADMIN";
-    public static final String USER_TYPE = "USER";
+    public static final String ADMINISTRATOR = "ADMINISTRATOR";
+    public static final String R_MODERATOR = "R_MODERATOR";
+    public static final String RU_MODERATOR = "RU_MODERATOR";
+    public static final String RUD_MODERATOR = "RUD_MODERATOR";
+    public static final String USER = "USER";
 
     private String roleType;
     private String description;

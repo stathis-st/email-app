@@ -17,7 +17,7 @@ import com.emailapp.view.admin.UserRegistrationView;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AdminController implements BaseController {
+public class AdminController extends DeleteModeratorController implements BaseController {
 
     private UserService userService = new UserService();
     //TODO CHANGE TO SERVICE
