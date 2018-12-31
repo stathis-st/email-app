@@ -1,9 +1,12 @@
 package com.emailapp.controller.user;
 
 import com.emailapp.controller.BaseController;
+import com.emailapp.domain.Role;
 import com.emailapp.domain.User;
 import com.emailapp.exception.NotFoundException;
 import com.emailapp.exception.user.UserPersistenceException;
+import com.emailapp.repository.RoleRepository;
+import com.emailapp.repository.RoleRepositoryImpl;
 import com.emailapp.service.UserService;
 import com.emailapp.view.admin.AdminDashboardView;
 import com.emailapp.view.admin.DeleteUserView;
@@ -17,6 +20,8 @@ import java.util.List;
 public class AdminController implements BaseController {
 
     private UserService userService = new UserService();
+    //TODO CHANGE TO SERVICE
+    private RoleRepository roleRepository = new RoleRepositoryImpl();
 
     public void getAdminDashboardView(User user) {
         new AdminDashboardView(user).render();
@@ -24,16 +29,17 @@ public class AdminController implements BaseController {
 
     public void getUserRegistrationView(User user) {
         List<User> registeredUsers = userService.getAllUsers();
-        new UserRegistrationView(user, registeredUsers).render();
+        List<Role> availableroles = roleRepository.getAll();
+        new UserRegistrationView(user, registeredUsers, availableroles).render();
     }
 
-    public void postRegisterUser(String username, String password, String firstName, String lastName) throws UserPersistenceException {
+    public void postRegisterUser(String username, String password, String firstName, String lastName, long roleId) throws UserPersistenceException, NotFoundException, SQLException {
         User userToSave = new User();
         userToSave.setUsername(username);
         userToSave.setPassword(password);
         userToSave.setLastName(lastName);
         userToSave.setFirstName(firstName);
-        userService.saveUser(userToSave);
+        userService.saveUser(userToSave, roleId);
     }
 
     public void showAllUsers(User sessionUser) {

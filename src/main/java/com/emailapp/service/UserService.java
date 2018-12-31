@@ -48,10 +48,17 @@ public class UserService {
         return userRepository.getOne(id);
     }
 
-    public void saveUser(User user) throws UserPersistenceException {
-        if (userRepository.save(user) < 1) {
+    public void saveUser(User user, long roleId) throws UserPersistenceException, NotFoundException, SQLException {
+        roleRepository.getOne(roleId);
+        long userId = userRepository.save(user);
+        if (userId < 1) {
             throw new UserPersistenceException(user.getUsername(), user.getFirstName(), user.getLastName());
         }
+
+        UserRole userRole = new UserRole();
+        userRole.setUsersId(userId);
+        userRole.setRolesId(roleId);
+        userRoleRepository.save(userRole);
     }
 
     public boolean deleteUser(User user) {

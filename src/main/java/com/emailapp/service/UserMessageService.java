@@ -4,6 +4,8 @@ import com.emailapp.domain.Message;
 import com.emailapp.domain.User;
 import com.emailapp.domain.UserMessage;
 import com.emailapp.exception.NotFoundException;
+import com.emailapp.repository.FileRepository;
+import com.emailapp.repository.FileRepositoryImpl;
 import com.emailapp.repository.MessageRepository;
 import com.emailapp.repository.MessageRepositoryImpl;
 import com.emailapp.repository.UserMessageRepository;
@@ -21,6 +23,7 @@ public class UserMessageService {
     private MessageRepository messageRepository = new MessageRepositoryImpl();
     private UserMessageRepository userMessageRepository = new UserMessageRepository();
     private UserRepository userRepository = new UserRepositoryImpl();
+    private FileRepository fileRepository = new FileRepositoryImpl();
 
     public User getUserWithReceivedMessages(User user) {
         List<Message> receivedMessages = messageRepository.getReceivedMessagesByUser(user.getId());
@@ -53,6 +56,8 @@ public class UserMessageService {
 
         userMessageRepository.save(sentMessage);
         userMessageRepository.save(receivedMessage);
+
+        fileRepository.writeToFile(message);
         return id;
     }
 

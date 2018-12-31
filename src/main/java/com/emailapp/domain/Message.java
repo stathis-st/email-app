@@ -3,7 +3,7 @@ package com.emailapp.domain;
 
 import java.time.LocalDateTime;
 
-public class Message extends Entity {
+public class Message extends Entity implements FileEntity{
 
     private String messageData;
     private String subject;
@@ -57,13 +57,21 @@ public class Message extends Entity {
 
     @Override
     public String toString() {
-        return "Message" +
-                "messageData='" + messageData + '\'' +
+        return "Message id=" + id +
+                ", messageData='" + messageData + '\'' +
                 ", subject='" + subject + '\'' +
                 ", dateOfSubmission=" + dateOfSubmission +
                 ", receiver=" + receiver +
-                ", sender=" + sender +
-                ", id=" + id +
-                '}';
+                ", sender=" + sender;
+    }
+
+    @Override
+    public String getContent() {
+        return this.toString();
+    }
+
+    @Override
+    public String getBaseDirectory() {
+        return "D:\\JavaPrograms\\email-app\\messages\\";
     }
 }
