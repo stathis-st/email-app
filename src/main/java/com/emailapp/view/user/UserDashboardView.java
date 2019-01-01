@@ -12,7 +12,7 @@ public class UserDashboardView implements BaseView, MenuProvider {
 
     protected User sessionUser;
 
-    protected UserController userController = new UserController();
+    protected UserController userController = UserController.getInstance();
 
     public UserDashboardView(User sessionUser) {
         this.sessionUser = sessionUser;

@@ -17,7 +17,17 @@ public class RoleRepositoryImpl implements RoleRepository {
 
     private static final String UPDATE_STATEMENT = String.format("UPDATE %s SET %s = ?, %s = ? WHERE `id` = ?",
             TABLE_NAME, COLUMN_ROLES_ROLE_TYPE, COLUMN_ROLES_DESCRIPTION);
+    private static RoleRepositoryImpl roleRepositoryImplInstance;
 
+    private RoleRepositoryImpl() {
+    }
+
+    public static RoleRepositoryImpl getInstance() {
+        if (roleRepositoryImplInstance == null) {
+            roleRepositoryImplInstance = new RoleRepositoryImpl();
+        }
+        return roleRepositoryImplInstance;
+    }
 
     @Override
     public String getTableName() {

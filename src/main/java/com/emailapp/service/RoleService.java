@@ -8,7 +8,19 @@ import java.util.List;
 
 public class RoleService {
 
-    private RoleRepository roleRepository = new RoleRepositoryImpl();
+    private static RoleService roleServiceInstance;
+
+    private RoleRepository roleRepository = RoleRepositoryImpl.getInstance();
+
+    private RoleService() {
+    }
+
+    public static RoleService getInstance() {
+        if (roleServiceInstance == null) {
+            roleServiceInstance = new RoleService();
+        }
+        return roleServiceInstance;
+    }
 
     public List<Role> getAllRoles() {
         return roleRepository.getAll();

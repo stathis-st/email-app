@@ -12,7 +12,7 @@ public class AdminDashboardView implements BaseView, MenuProvider {
 
     protected User sessionUser;
 
-    protected AdminController adminController = new AdminController();
+    protected AdminController adminController = AdminController.getInstance();
 
     public AdminDashboardView(User sessionUser) {
         this.sessionUser = sessionUser;

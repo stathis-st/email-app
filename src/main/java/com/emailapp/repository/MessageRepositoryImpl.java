@@ -45,6 +45,18 @@ public class MessageRepositoryImpl implements MessageRepository {
                     "                    AND message_type = '%s'" +
                     "WHERE user_id = ?)";
 
+    private static MessageRepositoryImpl messageRepositoryImplInstance;
+
+    private MessageRepositoryImpl() {
+    }
+
+    public static MessageRepositoryImpl getInstance() {
+        if (messageRepositoryImplInstance == null) {
+            messageRepositoryImplInstance = new MessageRepositoryImpl();
+        }
+        return messageRepositoryImplInstance;
+    }
+
     @Override
     public String getTableName() {
         return TABLE_NAME;

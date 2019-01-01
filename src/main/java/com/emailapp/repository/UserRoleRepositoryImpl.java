@@ -22,6 +22,18 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
     private static final String SELECT_USER_ROLE_BY_USER_ID = String.format("SELECT * FROM %s WHERE %s = ?",
             TABLE_NAME, COLUMN_USERS_ROLES_USERS_ID);
 
+    private static UserRoleRepositoryImpl userRoleRepositoryImplInstance;
+
+    private UserRoleRepositoryImpl() {
+    }
+
+    public static UserRoleRepositoryImpl getInstance() {
+        if (userRoleRepositoryImplInstance == null) {
+            userRoleRepositoryImplInstance = new UserRoleRepositoryImpl();
+        }
+        return userRoleRepositoryImplInstance;
+    }
+
     @Override
     public String getTableName() {
         return TABLE_NAME;

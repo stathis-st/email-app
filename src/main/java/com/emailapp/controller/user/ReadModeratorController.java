@@ -11,7 +11,20 @@ import java.util.List;
 
 public class ReadModeratorController implements BaseController {
 
-    private UserMessageService userMessageService = new UserMessageService();
+    private static ReadModeratorController readModeratorControllerInstance;
+
+    private UserMessageService userMessageService = UserMessageService.getInstance();
+
+    protected ReadModeratorController() {
+    }
+
+    public static synchronized ReadModeratorController getInstance() {
+        if (readModeratorControllerInstance == null) {
+            readModeratorControllerInstance = new ReadModeratorController();
+        }
+        return readModeratorControllerInstance;
+    }
+
 
     public void getBaseModeratorView(User sessionUser) {
         new ModeratorDashboardView(sessionUser).render();

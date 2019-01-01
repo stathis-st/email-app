@@ -22,10 +22,23 @@ import static com.emailapp.domain.UserMessage.SENT;
 
 public class UserMessageService {
 
-    private MessageRepository messageRepository = new MessageRepositoryImpl();
-    private UserMessageRepository userMessageRepository = new UserMessageRepository();
-    private UserRepository userRepository = new UserRepositoryImpl();
-    private FileRepository fileRepository = new FileRepositoryImpl();
+
+    private static UserMessageService userMessageServiceInstance;
+
+    private MessageRepository messageRepository = MessageRepositoryImpl.getInstance();
+    private UserMessageRepository userMessageRepository = UserMessageRepository.getInstance();
+    private UserRepository userRepository = UserRepositoryImpl.getInstance();
+    private FileRepository fileRepository = FileRepositoryImpl.getInstance();
+
+    private UserMessageService() {
+    }
+
+    public static UserMessageService getInstance() {
+        if (userMessageServiceInstance == null) {
+            userMessageServiceInstance = new UserMessageService();
+        }
+        return userMessageServiceInstance;
+    }
 
     public User getUserWithReceivedMessages(User user) {
         List<Message> receivedMessages = messageRepository.getReceivedMessagesByUser(user.getId());

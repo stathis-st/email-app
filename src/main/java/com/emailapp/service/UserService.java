@@ -22,11 +22,23 @@ import java.util.stream.Collectors;
 
 public class UserService {
 
-    private UserRepository userRepository = new UserRepositoryImpl();
-    private UserRoleRepository userRoleRepository = new UserRoleRepositoryImpl();
-    private RoleRepository roleRepository = new RoleRepositoryImpl();
+    private static UserService userServiceInstance;
 
-    private UserMessageService userMessageService = new UserMessageService();
+    private UserRepository userRepository = UserRepositoryImpl.getInstance();
+    private UserRoleRepository userRoleRepository = UserRoleRepositoryImpl.getInstance();
+    private RoleRepository roleRepository = RoleRepositoryImpl.getInstance();
+
+    private UserMessageService userMessageService = UserMessageService.getInstance();
+
+    private UserService() {
+    }
+
+    public static UserService getInstance() {
+        if (userServiceInstance == null) {
+            userServiceInstance = new UserService();
+        }
+        return userServiceInstance;
+    }
 
     public User login(String username, String password) throws InvalidCredentialsException {
         User user = userRepository.getUserByUsernameAndPassword(username, password);
@@ -40,8 +52,25 @@ public class UserService {
         return user;
     }
 
+    public List<User> getAllSimpleUsers() {
+        return getAllUsers().stream()
+                .filter(user -> user.getRole().getRoleType().equals(Role.USER))
+                .collect(Collectors.toList());
+    }
+
     public List<User> getAllUsers() {
-        return userRepository.getAll();
+        List<User> users = userRepository.getAll();
+        Role role = null;
+        for (User user : users) {
+            UserRole userRole = userRoleRepository.getUserRoleIdByUserId(user.getId());
+            try {
+                role = roleRepository.getOne(userRole.getRolesId());
+            } catch (SQLException | NotFoundException e) {
+                e.getMessage();
+            }
+            user.setRole(role);
+        }
+        return users;
     }
 
     public User getUserById(long id) throws NotFoundException, SQLException {

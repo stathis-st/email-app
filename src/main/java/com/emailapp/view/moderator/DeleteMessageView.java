@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class DeleteMessageView implements BaseView, MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
 
-    private DeleteModeratorController deleteModeratorController = new DeleteModeratorController();
+    private DeleteModeratorController deleteModeratorController = DeleteModeratorController.getInstance();
 
     private User sessionUser;
     private List<Message> messages;

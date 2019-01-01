@@ -25,6 +25,18 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String SELECT_USER_BY_USERNAME_AND_PASSWORD = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ?;",
             TABLE_NAME, COLUMN_USERS_USERNAME, COLUMN_USERS_PASSWORD);
 
+    private static UserRepositoryImpl userRepositoryImplInstance;
+
+    private UserRepositoryImpl() {
+    }
+
+    public static UserRepositoryImpl getInstance() {
+        if (userRepositoryImplInstance == null) {
+            userRepositoryImplInstance = new UserRepositoryImpl();
+        }
+        return userRepositoryImplInstance;
+    }
+
 
     @Override
     public String getTableName() {

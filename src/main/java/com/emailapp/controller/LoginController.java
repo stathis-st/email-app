@@ -12,11 +12,23 @@ import static com.emailapp.domain.Role.*;
 
 public class LoginController implements BaseController {
 
-    private UserService userService = new UserService();
+    private static LoginController loginControllerInstance;
 
-    private AdminController adminController = new AdminController();
-    private ReadModeratorController readModeratorController = new ReadModeratorController();
-    private UserController userController = new UserController();
+    private UserService userService = UserService.getInstance();
+
+    private AdminController adminController = AdminController.getInstance();
+    private ReadModeratorController readModeratorController = ReadModeratorController.getInstance();
+    private UserController userController = UserController.getInstance();
+
+    private LoginController() {
+    }
+
+    public static LoginController getInstance() {
+        if (loginControllerInstance == null) {
+            loginControllerInstance = new LoginController();
+        }
+        return loginControllerInstance;
+    }
 
     public void getLoginView() {
         new LoginView().render();

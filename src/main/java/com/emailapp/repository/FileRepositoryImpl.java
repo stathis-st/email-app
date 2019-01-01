@@ -15,6 +15,18 @@ public class FileRepositoryImpl implements FileRepository {
     private static final String FILE_EXTENSION = ".csv";
     private static final String HEADER = "Message Id,Subject,Message content,From,To,Date of submission";
 
+    private static FileRepositoryImpl fileRepositoryImplInstance;
+
+    private FileRepositoryImpl() {
+    }
+
+    public static FileRepositoryImpl getInstance() {
+        if (fileRepositoryImplInstance == null) {
+            fileRepositoryImplInstance = new FileRepositoryImpl();
+        }
+        return fileRepositoryImplInstance;
+    }
+
     @Override
     public void writeToFile(FileEntity fileEntity) {
 

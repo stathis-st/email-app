@@ -17,8 +17,20 @@ import java.util.List;
 
 public class UserController implements BaseController {
 
-    private UserMessageService userMessageService = new UserMessageService();
-    private UserService userService = new UserService();
+    private static UserController userControllerInstance;
+
+    private UserMessageService userMessageService = UserMessageService.getInstance();
+    private UserService userService = UserService.getInstance();
+
+    private UserController() {
+    }
+
+    public static UserController getInstance() {
+        if (userControllerInstance == null) {
+            userControllerInstance = new UserController();
+        }
+        return userControllerInstance;
+    }
 
     public void getUserDashboardView(User user) {
         new UserDashboardView(user).render();
@@ -35,7 +47,7 @@ public class UserController implements BaseController {
     }
 
     public void getComposeMessageView(User fromUser) {
-        List<User> availableUsers = userService.getAllUsers();
+        List<User> availableUsers = userService.getAllSimpleUsers();
         new ComposeMessageView(fromUser, availableUsers).render();
     }
 

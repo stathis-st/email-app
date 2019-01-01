@@ -12,7 +12,19 @@ import java.util.List;
 
 public class DeleteModeratorController extends UpdateModeratorController implements BaseController {
 
-    private UserMessageService userMessageService = new UserMessageService();
+    private static DeleteModeratorController deleteModeratorControllerInstance;
+
+    private UserMessageService userMessageService = UserMessageService.getInstance();
+
+    private DeleteModeratorController() {
+    }
+
+    public static synchronized DeleteModeratorController getInstance() {
+        if (deleteModeratorControllerInstance == null) {
+            deleteModeratorControllerInstance = new DeleteModeratorController();
+        }
+        return deleteModeratorControllerInstance;
+    }
 
     public void getMessageDeleteView(User sessionUser) {
         List<Message> messages = userMessageService.getAllMessages();

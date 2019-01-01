@@ -15,9 +15,9 @@ import static com.emailapp.domain.Role.RU_MODERATOR;
 
 public class ModeratorDashboardView implements BaseView, MenuProvider {
 
-    private ReadModeratorController readModeratorController = new ReadModeratorController();
-    private UpdateModeratorController updateModeratorController = new UpdateModeratorController();
-    private DeleteModeratorController deleteModeratorController = new DeleteModeratorController();
+    private ReadModeratorController readModeratorController = ReadModeratorController.getInstance();
+    private UpdateModeratorController updateModeratorController = UpdateModeratorController.getInstance();
+    private DeleteModeratorController deleteModeratorController = DeleteModeratorController.getInstance();
 
     private User sessionUser;
 
@@ -48,11 +48,8 @@ public class ModeratorDashboardView implements BaseView, MenuProvider {
                 readModeratorController.showAllMessages(sessionUser);
                 goBack();
             } else if (choice == 2) {
-                //TODO SELECT AND EDIT A MESSAGE - SAME AS EDITING A USER MORE OR LESS
                 updateModeratorController.getMessageEditView(sessionUser);
-
             } else if (choice == 3) {
-                //TODO delete message
                 deleteModeratorController.getMessageDeleteView(sessionUser);
             }
         }

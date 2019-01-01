@@ -12,7 +12,19 @@ import java.util.List;
 
 public class UpdateModeratorController extends ReadModeratorController implements BaseController {
 
-    private UserMessageService userMessageService = new UserMessageService();
+    private static UpdateModeratorController updateModeratorControllerInstance;
+
+    private UserMessageService userMessageService = UserMessageService.getInstance();
+
+    protected UpdateModeratorController() {
+    }
+
+    public static synchronized UpdateModeratorController getInstance() {
+        if (updateModeratorControllerInstance == null) {
+            updateModeratorControllerInstance = new UpdateModeratorController();
+        }
+        return updateModeratorControllerInstance;
+    }
 
     public void getMessageEditView(User sessionUser) {
         List<Message> messages = userMessageService.getAllMessages();

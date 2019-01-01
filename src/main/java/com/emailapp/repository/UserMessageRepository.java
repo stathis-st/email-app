@@ -24,6 +24,18 @@ public class UserMessageRepository implements CrudRepository<UserMessage> {
 
     private static final String SELECT_USER_MESSAGES_BY_MESSAGE_ID = String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, COLUMN_USER_MESSAGES_MESSAGE_ID);
 
+    private static UserMessageRepository userMessageRepositoryInstance;
+
+    private UserMessageRepository() {
+    }
+
+    public static UserMessageRepository getInstance() {
+        if (userMessageRepositoryInstance == null) {
+            userMessageRepositoryInstance = new UserMessageRepository();
+        }
+        return userMessageRepositoryInstance;
+    }
+
     @Override
     public String getTableName() {
         return TABLE_NAME;

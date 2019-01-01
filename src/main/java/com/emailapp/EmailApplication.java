@@ -6,6 +6,6 @@ import com.emailapp.controller.HomeController;
 public class EmailApplication {
 
     public static void main(String[] args) {
-        new HomeController().getHomeView();
+        HomeController.getInstance().getHomeView();
     }
 }

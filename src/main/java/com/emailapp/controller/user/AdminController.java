@@ -16,11 +16,22 @@ import com.emailapp.view.admin.UserRegistrationView;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AdminController extends DeleteModeratorController implements BaseController {
+public class AdminController implements BaseController {
 
-    private UserService userService = new UserService();
-    //TODO CHANGE TO SERVICE
-    private RoleService roleService = new RoleService();
+    private static AdminController adminControllerInstance;
+
+    private UserService userService = UserService.getInstance();
+    private RoleService roleService = RoleService.getInstance();
+
+    private AdminController() {
+    }
+
+    public static AdminController getInstance() {
+        if (adminControllerInstance == null) {
+            adminControllerInstance = new AdminController();
+        }
+        return adminControllerInstance;
+    }
 
     public void getAdminDashboardView(User user) {
         new AdminDashboardView(user).render();

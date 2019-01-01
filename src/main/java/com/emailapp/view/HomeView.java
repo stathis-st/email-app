@@ -12,7 +12,7 @@ public class HomeView implements BaseView, MenuProvider {
     private static final String LOGIN_OPTION = "Login";
     private static final String EXIT_THE_APPLICATION_OPTION = "Exit the application";
 
-    private LoginController loginController = new LoginController();
+    private LoginController loginController = LoginController.getInstance();
 
     @Override
     public void render() {

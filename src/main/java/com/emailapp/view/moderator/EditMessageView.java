@@ -16,24 +16,24 @@ import java.util.stream.Collectors;
 
 public class EditMessageView implements BaseView, MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
 
-    private UpdateModeratorController updateModeratorController = new UpdateModeratorController();
+    private UpdateModeratorController updateModeratorController = UpdateModeratorController.getInstance();
 
     private User sessionUser;
-    private List<Message> messsages;
+    private List<Message> messages;
 
-    public EditMessageView(User sessionUser, List<Message> messsages) {
+    public EditMessageView(User sessionUser, List<Message> messages) {
         this.sessionUser = sessionUser;
-        this.messsages = messsages;
+        this.messages = messages;
     }
 
     @Override
     public void render() {
-        Map<Long, String> availableMessagesToEdit = messsages.stream()
+        Map<Long, String> availableMessagesToEdit = messages.stream()
                 .collect(Collectors.toMap(Message::getId, Message::getMessageInfo));
 
         long chosenId = provideSelectionMenu(availableMessagesToEdit);
 
-        Message chosenMessage = messsages.stream()
+        Message chosenMessage = messages.stream()
                 .filter(message -> message.getId() == chosenId)
                 .findFirst().get();
 

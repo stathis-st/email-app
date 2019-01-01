@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class EditUserView implements BaseView, MenuProvider, UserEditor, UsersRenderer, ExceptionResolver {
 
-    private AdminController adminController = new AdminController();
+    private AdminController adminController = AdminController.getInstance();
 
     private User sessionUser;
     private List<User> registeredUsers;
