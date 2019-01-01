@@ -93,4 +93,13 @@ public class UserMessageService {
         userMessages.forEach(this::deleteUserMessage);
         deleteMessage(message);
     }
+
+    public Message getMessageById(long id) throws NotFoundException, SQLException {
+        return messageRepository.getOne(id);
+    }
+
+    public void editMessage(Message chosenMessage) throws NotFoundException, SQLException {
+        getMessageById(chosenMessage.getId());
+        messageRepository.update(chosenMessage);
+    }
 }

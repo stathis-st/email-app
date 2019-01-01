@@ -4,6 +4,7 @@ import com.emailapp.domain.Message;
 import com.emailapp.domain.User;
 import com.emailapp.exception.ExceptionResolver;
 import com.emailapp.view.BaseView;
+import com.emailapp.view.functionality.MessageEditor;
 import com.emailapp.view.functionality.ValidationProvider;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class ComposeMessageView extends UserDashboardView implements BaseView, ValidationProvider, ExceptionResolver {
+public class ComposeMessageView extends UserDashboardView implements BaseView, ValidationProvider, MessageEditor, ExceptionResolver {
 
     private static final String DELIMITER = ", ";
     private List<User> availableUsers;
@@ -71,17 +72,4 @@ public class ComposeMessageView extends UserDashboardView implements BaseView, V
         return receiverUserOptional.get();
     }
 
-    private String extractMessage(Scanner scanner) {
-        System.out.print("Message (max length 250 characters): ");
-        String message = scanner.nextLine();
-
-        while (message.length() > 250) {
-            System.out.println("Your message is longer than 250 characters!");
-            System.out.println("Please type a message up to 250 characters");
-            System.out.print("Message (max length 250 characters): ");
-            message = scanner.nextLine();
-        }
-
-        return message;
-    }
 }

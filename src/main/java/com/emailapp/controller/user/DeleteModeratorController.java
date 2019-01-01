@@ -11,7 +11,14 @@ public class DeleteModeratorController extends UpdateModeratorController impleme
 
     private UserMessageService userMessageService = new UserMessageService();
 
+//    public void getUserDeleteView(User sessionUser) {
+//        List<User> registeredUsers = userService.getAllUsers();
+//        //TODO remove self with sessionUser
+//        new DeleteUserView(sessionUser, registeredUsers).render();
+//    }
+
     public void deleteMessage(User sessionUser, long chosenId) throws NotFoundException, SQLException {
         userMessageService.deleteMessageById(chosenId);
     }
+
 }

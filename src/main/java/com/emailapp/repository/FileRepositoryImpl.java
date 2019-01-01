@@ -12,13 +12,16 @@ import java.time.format.DateTimeFormatter;
 
 public class FileRepositoryImpl implements FileRepository {
 
+    public static final String FILE_EXTENSION = ".csv";
+
+
     @Override
     public void writeToFile(FileEntity fileEntity) {
 
         StringBuilder filePath = new StringBuilder();
         filePath.append(fileEntity.getBaseDirectory())
                 .append(DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now()))
-                .append(".csv");
+                .append(FILE_EXTENSION);
 
         StringBuilder header = new StringBuilder();
         header.append("Message Id").append(",")

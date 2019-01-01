@@ -1,6 +1,7 @@
 package com.emailapp.view.moderator;
 
 import com.emailapp.controller.user.DeleteModeratorController;
+import com.emailapp.controller.user.ReadModeratorController;
 import com.emailapp.controller.user.UpdateModeratorController;
 import com.emailapp.domain.Message;
 import com.emailapp.domain.User;
@@ -12,22 +13,19 @@ import com.emailapp.view.functionality.MessagesRenderer;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.emailapp.domain.Role.ADMINISTRATOR;
 import static com.emailapp.domain.Role.RUD_MODERATOR;
 import static com.emailapp.domain.Role.RU_MODERATOR;
 
 public class ModeratorDashboardView implements BaseView, MenuProvider, MessagesRenderer, ExceptionResolver {
 
+    private ReadModeratorController readModeratorController = new ReadModeratorController();
     private UpdateModeratorController updateModeratorController = new UpdateModeratorController();
     private DeleteModeratorController deleteModeratorController = new DeleteModeratorController();
 
     private User sessionUser;
-//    private List<Message> messageList;
 
-
-    public ModeratorDashboardView(User sessionUser/*, List<Message> messageList*/) {
+    public ModeratorDashboardView(User sessionUser) {
         this.sessionUser = sessionUser;
-//        this.messageList = messageList;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class ModeratorDashboardView implements BaseView, MenuProvider, MessagesR
                 availableOptions.put(2L, "Update Message");
                 break;
             case RUD_MODERATOR:
-            case ADMINISTRATOR:
+                availableOptions.put(2L, "Update Message");
                 availableOptions.put(3L, "Delete Message");
                 break;
         }
@@ -50,12 +48,16 @@ public class ModeratorDashboardView implements BaseView, MenuProvider, MessagesR
             if (choice == 0) {
                 return;
             } else if (choice == 1) {
-//                printMessages(messageList);
-                //readModeratorController.showAllMessages(sessionUser)
+                readModeratorController.showAllMessages(sessionUser);
+                goBack();
             } else if (choice == 2) {
                 //TODO SELECT AND EDIT A MESSAGE - SAME AS EDITING A USER MORE OR LESS
-                //updateModeratorController.getUpdateMessageView(sessionUser)
+                updateModeratorController.getMessageEditView(sessionUser);
+
             } else if (choice == 3) {
+                //TODO delete message
+//                adminController.getUserDeleteView(sessionUser);
+
 //                Map<Long, String> availableMessagesToDelete = messageList.stream()
 //                        .collect(Collectors.toMap(Message::getId, (message) -> message.getSubject() + " " + DateTimeFormatter.ISO_DATE_TIME.format(message.getDateOfSubmission())));
 //                long chosenId = provideSelectionMenu(availableMessagesToDelete);

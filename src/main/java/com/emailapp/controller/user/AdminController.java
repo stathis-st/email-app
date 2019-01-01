@@ -29,8 +29,8 @@ public class AdminController extends DeleteModeratorController implements BaseCo
 
     public void getUserRegistrationView(User user) {
         List<User> registeredUsers = userService.getAllUsers();
-        List<Role> availableroles = roleRepository.getAll();
-        new UserRegistrationView(user, registeredUsers, availableroles).render();
+        List<Role> availableRoles = roleRepository.getAll();
+        new UserRegistrationView(user, registeredUsers, availableRoles).render();
     }
 
     public void postRegisterUser(String username, String password, String firstName, String lastName, long roleId) throws UserPersistenceException, NotFoundException, SQLException {
@@ -50,7 +50,7 @@ public class AdminController extends DeleteModeratorController implements BaseCo
 
     public void getUserDeleteView(User sessionUser) {
         List<User> registeredUsers = userService.getAllUsers();
-        //TODO remove self with sessionUser
+        registeredUsers.remove(sessionUser);
         new DeleteUserView(sessionUser, registeredUsers).render();
     }
 

@@ -16,7 +16,7 @@ public interface UsersRenderer {
         stringBuilder.append(user.getId()).append("\t")
                 .append(user.getUsername()).append("\t")
                 .append(user.getFirstName()).append("\t")
-                .append(user.getLastName());
+                .append(user.getLastName()).append("\t");
         System.out.println(stringBuilder);
     }
 }
