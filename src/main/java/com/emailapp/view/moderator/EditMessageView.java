@@ -16,9 +16,7 @@ import java.util.stream.Collectors;
 
 public class EditMessageView implements BaseView, MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
 
-//    public static final String MEASSAGES_HEADER = "";
-
-    UpdateModeratorController updateModeratorController = new UpdateModeratorController();
+    private UpdateModeratorController updateModeratorController = new UpdateModeratorController();
 
     private User sessionUser;
     private List<Message> messsages;
@@ -53,7 +51,7 @@ public class EditMessageView implements BaseView, MenuProvider, MessagesRenderer
             System.out.println("Successfully edited message");
         } catch (Exception e) {
             handleException(e);
-            System.out.println("Failed to edit user with id " + chosenId);
+            System.out.println("Failed to edit message with id " + chosenId);
         }
 
     }

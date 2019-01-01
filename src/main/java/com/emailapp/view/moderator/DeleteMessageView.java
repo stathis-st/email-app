@@ -1,0 +1,46 @@
+package com.emailapp.view.moderator;
+
+import com.emailapp.controller.user.DeleteModeratorController;
+import com.emailapp.domain.Message;
+import com.emailapp.domain.User;
+import com.emailapp.exception.ExceptionResolver;
+import com.emailapp.view.BaseView;
+import com.emailapp.view.functionality.MenuProvider;
+import com.emailapp.view.functionality.MessageEditor;
+import com.emailapp.view.functionality.MessagesRenderer;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class DeleteMessageView implements BaseView, MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
+
+    private DeleteModeratorController deleteModeratorController = new DeleteModeratorController();
+
+    private User sessionUser;
+    private List<Message> messages;
+
+    public DeleteMessageView(User sessionUser, List<Message> messages) {
+        this.sessionUser = sessionUser;
+        this.messages = messages;
+    }
+
+    @Override
+    public void render() {
+        Map<Long, String> availableMessagesToDelete = messages.stream()
+                .collect(Collectors.toMap(Message::getId, Message::getMessageInfo));
+        long chosenId = provideSelectionMenu(availableMessagesToDelete);
+        try {
+            deleteModeratorController.postDeleteMessage(sessionUser, chosenId);
+            System.out.println("Successfully deleted message with id " + chosenId);
+        } catch (Exception e) {
+            handleException(e);
+            System.out.println("Failed to delete message.");
+        }
+    }
+
+    @Override
+    public void showSpecificDetailsForMessage(Message message) {
+
+    }
+}

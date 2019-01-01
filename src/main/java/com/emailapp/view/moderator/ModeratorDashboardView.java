@@ -56,6 +56,7 @@ public class ModeratorDashboardView implements BaseView, MenuProvider, MessagesR
 
             } else if (choice == 3) {
                 //TODO delete message
+                deleteModeratorController.getMessageDeleteView(sessionUser);
 //                adminController.getUserDeleteView(sessionUser);
 
 //                Map<Long, String> availableMessagesToDelete = messageList.stream()
