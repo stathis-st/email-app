@@ -12,33 +12,24 @@ import java.time.format.DateTimeFormatter;
 
 public class FileRepositoryImpl implements FileRepository {
 
-    public static final String FILE_EXTENSION = ".csv";
-
+    private static final String FILE_EXTENSION = ".csv";
+    private static final String HEADER = "Message Id,Subject,Message content,From,To,Date of submission";
 
     @Override
     public void writeToFile(FileEntity fileEntity) {
 
-        StringBuilder filePath = new StringBuilder();
-        filePath.append(fileEntity.getBaseDirectory())
-                .append(DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now()))
-                .append(FILE_EXTENSION);
+        String filePath = fileEntity.getBaseDirectory() +
+                DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now()) +
+                FILE_EXTENSION;
 
-        StringBuilder header = new StringBuilder();
-        header.append("Message Id").append(",")
-                .append("Subject").append(",")
-                .append("Message content").append(",")
-                .append("From").append(",")
-                .append("To").append(",")
-                .append("Date of submission");
-
-        File messagesFile = new File(filePath.toString());
+        File messagesFile = new File(filePath);
 
         try (FileWriter fileWriter = new FileWriter(messagesFile, true);
              BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
              PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
 
             if (messagesFile.length() == 0) {
-                printWriter.println(header);
+                printWriter.println(HEADER);
             }
 
             printWriter.println(fileEntity.getContent());

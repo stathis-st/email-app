@@ -7,6 +7,9 @@ import java.time.format.DateTimeFormatter;
 
 public class Message extends Entity implements FileEntity{
 
+    public static final String CONTENT = "%s,%s,%s,%s %s,%s %s,%s";
+    public static final String BASE_DIRECTORY = "." + File.separator + "messages" + File.separator;
+
     private String messageData;
     private String subject;
     private LocalDateTime dateOfSubmission;
@@ -14,8 +17,8 @@ public class Message extends Entity implements FileEntity{
     private User receiver;
     private User sender;
 
-    private String DATE_TIME_PATTERN = "dd-MM-yyyy HH:mm:ss";
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+    public static final String  DATE_TIME_PATTERN = "dd-MM-yyyy HH:mm:ss";
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
 
     public Message() {
@@ -77,32 +80,19 @@ public class Message extends Entity implements FileEntity{
                 "Message Content: " + messageData + "\t" +
                 "Sender: " + sender.getFirstName() + " " + sender.getLastName() + "\t" +
                 "Receiver: " + receiver.getFirstName() + " " + receiver.getLastName() + "\t" +
-                "Date Of Submission: " + dateOfSubmission.format(formatter);
+                "Date Of Submission: " + dateOfSubmission.format(FORMATTER);
         return messageInfo;
     }
 
     @Override
     public String getContent() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.id).append(",")
-                .append(subject).append(",")
-                .append(messageData).append(",")
-                .append(sender.getFirstName()).append(" ").append(sender.getLastName()).append(",")
-                .append(receiver.getFirstName()).append(" ").append(receiver.getLastName()).append(",")
-                .append(dateOfSubmission.format(formatter));
-
-        return stringBuilder.toString();
+        String content = String.format(CONTENT,
+                this.id, subject, messageData, sender.getFirstName(), sender.getLastName(), receiver.getFirstName(), receiver.getLastName(), dateOfSubmission.format(FORMATTER));
+        return content;
     }
 
     @Override
     public String getBaseDirectory() {
-
-        StringBuilder path = new StringBuilder();
-        path.append(".")
-                .append(File.separator)
-                .append("messages")
-                .append(File.separator);
-
-        return path.toString();
+        return BASE_DIRECTORY;
     }
 }

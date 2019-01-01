@@ -5,8 +5,7 @@ import com.emailapp.domain.Role;
 import com.emailapp.domain.User;
 import com.emailapp.exception.NotFoundException;
 import com.emailapp.exception.user.UserPersistenceException;
-import com.emailapp.repository.RoleRepository;
-import com.emailapp.repository.RoleRepositoryImpl;
+import com.emailapp.service.RoleService;
 import com.emailapp.service.UserService;
 import com.emailapp.view.admin.AdminDashboardView;
 import com.emailapp.view.admin.DeleteUserView;
@@ -21,7 +20,7 @@ public class AdminController extends DeleteModeratorController implements BaseCo
 
     private UserService userService = new UserService();
     //TODO CHANGE TO SERVICE
-    private RoleRepository roleRepository = new RoleRepositoryImpl();
+    private RoleService roleService = new RoleService();
 
     public void getAdminDashboardView(User user) {
         new AdminDashboardView(user).render();
@@ -29,7 +28,7 @@ public class AdminController extends DeleteModeratorController implements BaseCo
 
     public void getUserRegistrationView(User user) {
         List<User> registeredUsers = userService.getAllUsers();
-        List<Role> availableRoles = roleRepository.getAll();
+        List<Role> availableRoles = roleService.getAllRoles();
         new UserRegistrationView(user, registeredUsers, availableRoles).render();
     }
 
