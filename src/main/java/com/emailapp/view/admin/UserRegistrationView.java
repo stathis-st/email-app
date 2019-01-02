@@ -50,12 +50,23 @@ public class UserRegistrationView extends AdminDashboardView implements BaseView
 
     //TODO VALIDATIONS
     private String extractUsername(Scanner scanner) {
-        //sessionUser.getUsername() exists for sure in registered users set
         String username = sessionUser.getUsername();
-        while (registeredUserNames.contains(username)) {
-            System.out.print("Username:  ");
-            System.out.println(String.format("Should not be one of the following: %s", registeredUserNames));
-            username = scanner.nextLine();
+        while (registeredUserNames.contains(username) || username.length() <= 0 || username.length() > 25) {
+            if (username.length() <= 0) {
+                System.out.println("Username must not be empty!");
+                System.out.println("Username (max length 25 characters) ");
+                System.out.println(String.format("Should not be one of the following: %s", registeredUserNames));
+                username = scanner.nextLine().trim();
+            } else if (username.length() > 25) {
+                System.out.println("Username is longer than 45 characters!");
+                System.out.println("Username (max length 25 characters) ");
+                System.out.println(String.format("Should not be one of the following: %s", registeredUserNames));
+                username = scanner.nextLine().trim();
+            } else {
+                System.out.println("Username (max length 25 characters) ");
+                System.out.println(String.format("Should not be one of the following: %s", registeredUserNames));
+                username = scanner.nextLine().trim();
+            }
         }
         return username;
     }

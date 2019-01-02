@@ -26,7 +26,6 @@ public class ComposeMessageView extends UserDashboardView implements BaseView, V
                 .collect(Collectors.joining(DELIMITER));
     }
 
-
     @Override
     public void render() {
         Scanner scanner = new Scanner(System.in);
@@ -47,12 +46,6 @@ public class ComposeMessageView extends UserDashboardView implements BaseView, V
             System.out.println("Failed to send the message!");
             handleException(e);
         }
-    }
-
-    //TODO ADD (FRONTEND LIKE) VALIDATIONS IN THE FOLLOWING METHODS
-    private String extractSubject(Scanner scanner) {
-        System.out.print("Subject: ");
-        return scanner.nextLine();
     }
 
     private User extractReceiver(Scanner scanner) {

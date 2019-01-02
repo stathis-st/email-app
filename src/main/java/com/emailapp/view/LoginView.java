@@ -39,6 +39,7 @@ public class LoginView implements BaseView {
             }
         }
         System.out.println(FAILED_LOGIN_MESSAGE);
+        System.exit(0);
     }
 
 }
