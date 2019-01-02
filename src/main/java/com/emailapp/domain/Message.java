@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
 
 public class Message extends Entity implements FileEntity{
 
-    public static final String CONTENT = "%s,%s,%s,%s %s,%s %s,%s";
-    public static final String BASE_DIRECTORY = "." + File.separator + "messages" + File.separator;
+    private static final String CONTENT = "%s,%s,%s,%s %s,%s %s,%s";
+    private static final String BASE_DIRECTORY = "." + File.separator + "messages" + File.separator;
 
     private String messageData;
     private String subject;
@@ -17,9 +17,7 @@ public class Message extends Entity implements FileEntity{
     private User receiver;
     private User sender;
 
-    public static final String  DATE_TIME_PATTERN = "dd-MM-yyyy HH:mm:ss";
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
-
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     public Message() {
     }
@@ -76,19 +74,17 @@ public class Message extends Entity implements FileEntity{
     }
 
     public String getMessageInfo() {
-        String messageInfo = "Subject: " + subject + "\t" +
-                "Message Content: " + messageData + "\t" +
-                "Sender: " + sender.getFirstName() + " " + sender.getLastName() + "\t" +
-                "Receiver: " + receiver.getFirstName() + " " + receiver.getLastName() + "\t" +
+        return "Subject: " + subject + ", " +
+                "Message Content: " + messageData + ", " +
+                "Sender: " + sender.getFirstName() + " " + sender.getLastName() + ", " +
+                "Receiver: " + receiver.getFirstName() + " " + receiver.getLastName() + ", " +
                 "Date Of Submission: " + dateOfSubmission.format(FORMATTER);
-        return messageInfo;
     }
 
     @Override
     public String getContent() {
-        String content = String.format(CONTENT,
+        return String.format(CONTENT,
                 this.id, subject, messageData, sender.getFirstName(), sender.getLastName(), receiver.getFirstName(), receiver.getLastName(), dateOfSubmission.format(FORMATTER));
-        return content;
     }
 
     @Override

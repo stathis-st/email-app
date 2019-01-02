@@ -17,7 +17,6 @@ public class RegisteredUsersView extends AdminDashboardView implements BaseView,
 
     @Override
     public void render() {
-        //TODO FIX FORMAT
         printUsers(registeredUsers);
         goBack();
     }

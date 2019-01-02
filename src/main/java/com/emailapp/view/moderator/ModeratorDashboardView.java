@@ -7,7 +7,7 @@ import com.emailapp.domain.User;
 import com.emailapp.view.BaseView;
 import com.emailapp.view.functionality.MenuProvider;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.emailapp.domain.Role.RUD_MODERATOR;
@@ -27,8 +27,7 @@ public class ModeratorDashboardView implements BaseView, MenuProvider {
 
     @Override
     public void render() {
-        Map<Long, String> availableOptions = new HashMap<>();
-        availableOptions.put(0L, "Logout");
+        Map<Long, String> availableOptions = new LinkedHashMap<>();
         availableOptions.put(1L, "Read all Messages");
         switch (sessionUser.getRole().getRoleType()) {
             case RU_MODERATOR:
@@ -39,6 +38,7 @@ public class ModeratorDashboardView implements BaseView, MenuProvider {
                 availableOptions.put(3L, "Delete Message");
                 break;
         }
+        availableOptions.put(0L, "Logout");
 
         while (true) {
             long choice = provideSelectionMenu(availableOptions);

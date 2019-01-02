@@ -29,7 +29,7 @@ public class UserRegistrationView extends AdminDashboardView implements BaseView
         System.out.println("Please fill the user's personal info");
 
         Scanner scanner = new Scanner(System.in);
-        String username = extractUsername(scanner);
+        String username = extractUsername(scanner, registeredUserNames);
         String password = extractPassword(scanner);
         String firstName = extractName(scanner, "First Name: ");
         String lastName = extractName(scanner, "Last Name: ");
@@ -48,26 +48,4 @@ public class UserRegistrationView extends AdminDashboardView implements BaseView
         return provideSelectionMenu(map);
     }
 
-    //TODO VALIDATIONS
-    private String extractUsername(Scanner scanner) {
-        String username = sessionUser.getUsername();
-        while (registeredUserNames.contains(username) || username.length() <= 0 || username.length() > 25) {
-            if (username.length() <= 0) {
-                System.out.println("Username must not be empty!");
-                System.out.println("Username (max length 25 characters) ");
-                System.out.println(String.format("Should not be one of the following: %s", registeredUserNames));
-                username = scanner.nextLine().trim();
-            } else if (username.length() > 25) {
-                System.out.println("Username is longer than 45 characters!");
-                System.out.println("Username (max length 25 characters) ");
-                System.out.println(String.format("Should not be one of the following: %s", registeredUserNames));
-                username = scanner.nextLine().trim();
-            } else {
-                System.out.println("Username (max length 25 characters) ");
-                System.out.println(String.format("Should not be one of the following: %s", registeredUserNames));
-                username = scanner.nextLine().trim();
-            }
-        }
-        return username;
-    }
 }

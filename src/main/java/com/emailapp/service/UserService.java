@@ -59,18 +59,16 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        List<User> users = userRepository.getAll();
-        Role role = null;
-        for (User user : users) {
-            UserRole userRole = userRoleRepository.getUserRoleIdByUserId(user.getId());
-            try {
-                role = roleRepository.getOne(userRole.getRolesId());
-            } catch (SQLException | NotFoundException e) {
-                e.getMessage();
-            }
-            user.setRole(role);
-        }
-        return users;
+        return userRepository.getAll().stream()
+                .peek(user -> {
+                    UserRole userRole = userRoleRepository.getUserRoleIdByUserId(user.getId());
+                    try {
+                        Role role = roleRepository.getOne(userRole.getRolesId());
+                        user.setRole(role);
+                    } catch (SQLException | NotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }).collect(Collectors.toList());
     }
 
     public User getUserById(long id) throws NotFoundException, SQLException {

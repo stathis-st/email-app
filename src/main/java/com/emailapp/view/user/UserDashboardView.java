@@ -5,10 +5,19 @@ import com.emailapp.domain.User;
 import com.emailapp.view.BaseView;
 import com.emailapp.view.functionality.MenuProvider;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class UserDashboardView implements BaseView, MenuProvider {
+
+    private static final Map<Long, String> AVAILABLE_OPTIONS = new LinkedHashMap<>();
+
+    {
+        AVAILABLE_OPTIONS.put(1L, "Received");
+        AVAILABLE_OPTIONS.put(2L, "Sent");
+        AVAILABLE_OPTIONS.put(3L, "Compose");
+        AVAILABLE_OPTIONS.put(4L, "Logout");
+    }
 
     protected User sessionUser;
 
@@ -21,13 +30,8 @@ public class UserDashboardView implements BaseView, MenuProvider {
     @Override
     public void render() {
         System.out.println("Dear " + sessionUser.getFirstName() + " welcome to your account");
-        Map<Long, String> availableOptions = new HashMap<>();
-        availableOptions.put(1L, "Received");
-        availableOptions.put(2L, "Sent");
-        availableOptions.put(3L, "Compose");
-        availableOptions.put(4L, "Logout");
         while (true) {
-            long choice = provideSelectionMenu(availableOptions);
+            long choice = provideSelectionMenu(AVAILABLE_OPTIONS);
             if (choice == 1) {
                 userController.showReceivedMessagesOfUser(sessionUser);
             } else if (choice == 2) {

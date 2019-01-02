@@ -72,13 +72,11 @@ public class UserMessageService {
         UserMessage sentMessage = new UserMessage();
         sentMessage.setMessageId(id);
         sentMessage.setUserId(message.getSender().getId());
-        //TODO CHANGE TO ENUM
         sentMessage.setMessageType(SENT);
 
         UserMessage receivedMessage = new UserMessage();
         receivedMessage.setMessageId(id);
         receivedMessage.setUserId(message.getReceiver().getId());
-        //TODO CHANGE TO ENUM
         receivedMessage.setMessageType(RECEIVED);
 
         userMessageRepository.save(sentMessage);
