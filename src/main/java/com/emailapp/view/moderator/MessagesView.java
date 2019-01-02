@@ -7,7 +7,7 @@ import com.emailapp.view.functionality.MessagesRenderer;
 
 import java.util.List;
 
-public class MessagesView implements BaseView, MessagesRenderer {
+public class MessagesView extends BaseView implements MessagesRenderer {
 
     private User sessionUser;
     private List<Message> messages;
@@ -19,6 +19,7 @@ public class MessagesView implements BaseView, MessagesRenderer {
 
     @Override
     public void render() {
+        clearConsole();
         printMessages(messages);
     }
 

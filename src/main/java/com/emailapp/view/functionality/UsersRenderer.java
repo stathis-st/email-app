@@ -7,7 +7,6 @@ import java.util.List;
 public interface UsersRenderer {
 
     default void printUsers(List<User> users) {
-//        System.out.println("Id\tUsername\tFirst Name\tLast Name\tRole");
         users.forEach(this::showUser);
     }
 

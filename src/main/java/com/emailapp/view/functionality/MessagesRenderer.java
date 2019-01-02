@@ -2,7 +2,6 @@ package com.emailapp.view.functionality;
 
 import com.emailapp.domain.Message;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public interface MessagesRenderer {
@@ -16,7 +15,7 @@ public interface MessagesRenderer {
         stringBuilder.append("Message (").append(message.getId()).append(")\n");
         stringBuilder.append("\tSubject: ").append(message.getSubject()).append("\n");
         stringBuilder.append("\tMessage content: ").append(message.getMessageData()).append("\n");
-        stringBuilder.append("\tDate of submission: ").append(DateTimeFormatter.ISO_DATE_TIME.format(message.getDateOfSubmission()));
+        stringBuilder.append("\tDate of submission: ").append(Message.FORMATTER.format(message.getDateOfSubmission()));
         System.out.println(stringBuilder);
         showSpecificDetailsForMessage(message);
     }

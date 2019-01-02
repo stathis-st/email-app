@@ -8,7 +8,11 @@ import com.emailapp.exception.InvalidCredentialsException;
 import com.emailapp.service.UserService;
 import com.emailapp.view.LoginView;
 
-import static com.emailapp.domain.Role.*;
+import static com.emailapp.domain.Role.ADMINISTRATOR;
+import static com.emailapp.domain.Role.RUD_MODERATOR;
+import static com.emailapp.domain.Role.RU_MODERATOR;
+import static com.emailapp.domain.Role.R_MODERATOR;
+import static com.emailapp.domain.Role.USER;
 
 public class LoginController implements BaseController {
 

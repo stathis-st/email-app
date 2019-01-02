@@ -1,5 +1,10 @@
 package com.emailapp.view;
 
-public interface BaseView {
-    void render();
+import com.emailapp.view.functionality.ConsoleCleaner;
+
+public abstract class BaseView implements ConsoleCleaner {
+
+    public void render() {
+        clearConsole();
+    }
 }

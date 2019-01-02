@@ -8,10 +8,10 @@ import com.emailapp.view.functionality.MenuProvider;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class AdminDashboardView implements BaseView, MenuProvider {
-    
+public class AdminDashboardView extends BaseView implements MenuProvider {
+
     private static final Map<Long, String> AVAILABLE_OPTIONS = new LinkedHashMap<>();
-    
+
     {
         AVAILABLE_OPTIONS.put(1L, "Register a new User");
         AVAILABLE_OPTIONS.put(2L, "View all users");
@@ -30,6 +30,7 @@ public class AdminDashboardView implements BaseView, MenuProvider {
 
     @Override
     public void render() {
+        clearConsole();
         System.out.println("Dear administrator " + sessionUser.getFirstName() + " welcome to your account");
         while (true) {
             long choice = provideSelectionMenu(AVAILABLE_OPTIONS);
@@ -41,7 +42,7 @@ public class AdminDashboardView implements BaseView, MenuProvider {
                 adminController.getUserEditView(sessionUser);
             } else if (choice == 4) {
                 adminController.getUserDeleteView(sessionUser);
-            } else if (choice == 5) {
+            } else if (choice == 0) {
                 return;
             }
         }

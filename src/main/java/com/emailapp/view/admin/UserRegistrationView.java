@@ -3,7 +3,6 @@ package com.emailapp.view.admin;
 import com.emailapp.domain.Role;
 import com.emailapp.domain.User;
 import com.emailapp.exception.ExceptionResolver;
-import com.emailapp.view.BaseView;
 import com.emailapp.view.functionality.MenuProvider;
 import com.emailapp.view.functionality.UserEditor;
 
@@ -13,7 +12,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UserRegistrationView extends AdminDashboardView implements BaseView, MenuProvider, UserEditor, ExceptionResolver {
+public class UserRegistrationView extends AdminDashboardView implements MenuProvider, UserEditor, ExceptionResolver {
 
     private Set<String> registeredUserNames;
     private List<Role> availableRoles;
@@ -26,6 +25,7 @@ public class UserRegistrationView extends AdminDashboardView implements BaseView
 
     @Override
     public void render() {
+        clearConsole();
         System.out.println("Please fill the user's personal info");
 
         Scanner scanner = new Scanner(System.in);

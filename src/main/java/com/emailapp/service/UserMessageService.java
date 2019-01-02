@@ -55,9 +55,9 @@ public class UserMessageService {
     public List<Message> getAllMessages() {
         return userRepository.getAll().stream()
                 .map(user -> {
-                   List<Message> messages = messageRepository.getReceivedMessagesByUser(user.getId());
-                   messages.forEach(message -> message.setReceiver(user));
-                   return messages;
+                    List<Message> messages = messageRepository.getReceivedMessagesByUser(user.getId());
+                    messages.forEach(message -> message.setReceiver(user));
+                    return messages;
                 })
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());

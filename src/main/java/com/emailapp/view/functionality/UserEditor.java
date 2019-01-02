@@ -52,19 +52,4 @@ public interface UserEditor extends ValidationProvider {
         }
         return false;
     }
-
-//    default String validatePassword(String password) {
-//        while (password.length() <= 0 || password.length() > 45) {
-//            if (password.length() <= 0) {
-//                System.out.println("Password must not be empty!");
-//                System.out.print("Password (max length 25 characters): ");
-//                password = scanner.nextLine().trim();
-//            } else {
-//                System.out.println(renderedOutput + " is longer than 45 characters!");
-//                System.out.print(renderedOutput + " (max length 45 characters): ");
-//                name = scanner.nextLine().trim();
-//            }
-//        }
-//        return name;
-//    }
 }

@@ -2,17 +2,19 @@ package com.emailapp.view;
 
 import com.emailapp.controller.LoginController;
 import com.emailapp.exception.InvalidCredentialsException;
+import com.emailapp.view.functionality.ConsoleCleaner;
 
 import java.io.Console;
 import java.util.Scanner;
 
-public class LoginView implements BaseView {
+public class LoginView extends BaseView implements ConsoleCleaner {
 
     private static final int MAXIMUM_LOGIN_TRIES = 3;
     private static final String FAILED_LOGIN_MESSAGE = String.format("You reached the maximum login tries (%s). Exiting application...", MAXIMUM_LOGIN_TRIES);
 
     @Override
     public void render() {
+        clearConsole();
         int i = 0;
         while (i++ < MAXIMUM_LOGIN_TRIES) {
             try {

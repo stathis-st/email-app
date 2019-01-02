@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DeleteUserView implements BaseView, MenuProvider, ExceptionResolver {
+public class DeleteUserView extends BaseView implements MenuProvider, ExceptionResolver {
 
     private AdminController adminController = AdminController.getInstance();
 
@@ -24,6 +24,7 @@ public class DeleteUserView implements BaseView, MenuProvider, ExceptionResolver
 
     @Override
     public void render() {
+        clearConsole();
         Map<Long, String> availableUsersToDelete = registeredUsers.stream()
                 .collect(Collectors.toMap(User::getId, User::getUsername));
         long chosenId = provideSelectionMenu(availableUsersToDelete);

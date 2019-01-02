@@ -6,7 +6,7 @@ import com.emailapp.view.functionality.MenuProvider;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class HomeView implements BaseView, MenuProvider {
+public class HomeView extends BaseView implements MenuProvider {
 
     private static final String WELCOME_MESSAGE = "Welcome to the email application";
     private static final String LOGIN_OPTION = "Login";
@@ -22,6 +22,7 @@ public class HomeView implements BaseView, MenuProvider {
 
     @Override
     public void render() {
+        clearConsole();
         while (true) {
             System.out.println(WELCOME_MESSAGE);
             long choice = provideSelectionMenu(AVAILABLE_OPTIONS);

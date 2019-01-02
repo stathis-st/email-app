@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class EditMessageView implements BaseView, MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
+public class EditMessageView extends BaseView implements MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
 
     private UpdateModeratorController updateModeratorController = UpdateModeratorController.getInstance();
 
@@ -28,6 +28,7 @@ public class EditMessageView implements BaseView, MenuProvider, MessagesRenderer
 
     @Override
     public void render() {
+        clearConsole();
         Map<Long, String> availableMessagesToEdit = messages.stream()
                 .collect(Collectors.toMap(Message::getId, Message::getMessageInfo));
 

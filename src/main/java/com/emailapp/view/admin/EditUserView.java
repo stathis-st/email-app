@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class EditUserView implements BaseView, MenuProvider, UserEditor, UsersRenderer, ExceptionResolver {
+public class EditUserView extends BaseView implements MenuProvider, UserEditor, UsersRenderer, ExceptionResolver {
 
     private AdminController adminController = AdminController.getInstance();
 
@@ -29,6 +29,7 @@ public class EditUserView implements BaseView, MenuProvider, UserEditor, UsersRe
 
     @Override
     public void render() {
+        clearConsole();
         Map<Long, String> availableUsersToEdit = registeredUsers.stream()
                 .collect(Collectors.toMap(User::getId, User::getUsername));
 
@@ -37,7 +38,6 @@ public class EditUserView implements BaseView, MenuProvider, UserEditor, UsersRe
         User chosenUser = registeredUsers.stream()
                 .filter(user -> user.getId() == chosenId)
                 .findFirst().get();
-
 
 
         showUser(chosenUser);

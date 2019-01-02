@@ -1,12 +1,11 @@
 package com.emailapp.view.admin;
 
 import com.emailapp.domain.User;
-import com.emailapp.view.BaseView;
 import com.emailapp.view.functionality.UsersRenderer;
 
 import java.util.List;
 
-public class RegisteredUsersView extends AdminDashboardView implements BaseView, UsersRenderer {
+public class RegisteredUsersView extends AdminDashboardView implements UsersRenderer {
 
     protected List<User> registeredUsers;
 
@@ -17,6 +16,7 @@ public class RegisteredUsersView extends AdminDashboardView implements BaseView,
 
     @Override
     public void render() {
+        clearConsole();
         printUsers(registeredUsers);
         goBack();
     }

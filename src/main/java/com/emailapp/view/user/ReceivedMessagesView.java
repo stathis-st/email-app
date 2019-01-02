@@ -12,6 +12,7 @@ public class ReceivedMessagesView extends UserDashboardView implements MessagesR
 
     @Override
     public void render() {
+        clearConsole();
         printMessages(sessionUser.getReceivedMessages());
         goBack();
     }

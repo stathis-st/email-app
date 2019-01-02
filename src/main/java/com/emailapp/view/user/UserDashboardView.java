@@ -8,7 +8,7 @@ import com.emailapp.view.functionality.MenuProvider;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class UserDashboardView implements BaseView, MenuProvider {
+public class UserDashboardView extends BaseView implements MenuProvider {
 
     private static final Map<Long, String> AVAILABLE_OPTIONS = new LinkedHashMap<>();
 
@@ -29,6 +29,7 @@ public class UserDashboardView implements BaseView, MenuProvider {
 
     @Override
     public void render() {
+        clearConsole();
         System.out.println("Dear " + sessionUser.getFirstName() + " welcome to your account");
         while (true) {
             long choice = provideSelectionMenu(AVAILABLE_OPTIONS);

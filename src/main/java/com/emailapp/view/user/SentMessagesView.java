@@ -12,6 +12,7 @@ public class SentMessagesView extends UserDashboardView implements MessagesRende
 
     @Override
     public void render() {
+        clearConsole();
         printMessages(sessionUser.getSentMessages());
         goBack();
     }

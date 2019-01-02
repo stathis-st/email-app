@@ -13,7 +13,7 @@ import java.util.Map;
 import static com.emailapp.domain.Role.RUD_MODERATOR;
 import static com.emailapp.domain.Role.RU_MODERATOR;
 
-public class ModeratorDashboardView implements BaseView, MenuProvider {
+public class ModeratorDashboardView extends BaseView implements MenuProvider {
 
     private ReadModeratorController readModeratorController = ReadModeratorController.getInstance();
     private UpdateModeratorController updateModeratorController = UpdateModeratorController.getInstance();
@@ -27,6 +27,7 @@ public class ModeratorDashboardView implements BaseView, MenuProvider {
 
     @Override
     public void render() {
+        clearConsole();
         Map<Long, String> availableOptions = new LinkedHashMap<>();
         availableOptions.put(1L, "Read all Messages");
         switch (sessionUser.getRole().getRoleType()) {

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DeleteMessageView implements BaseView, MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
+public class DeleteMessageView extends BaseView implements MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
 
     private DeleteModeratorController deleteModeratorController = DeleteModeratorController.getInstance();
 
@@ -27,6 +27,7 @@ public class DeleteMessageView implements BaseView, MenuProvider, MessagesRender
 
     @Override
     public void render() {
+        clearConsole();
         Map<Long, String> availableMessagesToDelete = messages.stream()
                 .collect(Collectors.toMap(Message::getId, Message::getMessageInfo));
         long chosenId = provideSelectionMenu(availableMessagesToDelete);

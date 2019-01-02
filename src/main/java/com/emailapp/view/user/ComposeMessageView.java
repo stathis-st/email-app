@@ -3,7 +3,6 @@ package com.emailapp.view.user;
 import com.emailapp.domain.Message;
 import com.emailapp.domain.User;
 import com.emailapp.exception.ExceptionResolver;
-import com.emailapp.view.BaseView;
 import com.emailapp.view.functionality.MessageEditor;
 import com.emailapp.view.functionality.ValidationProvider;
 
@@ -12,7 +11,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class ComposeMessageView extends UserDashboardView implements BaseView, ValidationProvider, MessageEditor, ExceptionResolver {
+public class ComposeMessageView extends UserDashboardView implements ValidationProvider, MessageEditor, ExceptionResolver {
 
     private static final String DELIMITER = ", ";
     private List<User> availableUsers;
@@ -28,6 +27,7 @@ public class ComposeMessageView extends UserDashboardView implements BaseView, V
 
     @Override
     public void render() {
+        clearConsole();
         Scanner scanner = new Scanner(System.in);
 
         String subject = extractSubject(scanner);

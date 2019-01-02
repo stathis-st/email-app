@@ -5,7 +5,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Message extends Entity implements FileEntity{
+public class Message extends Entity implements FileEntity {
 
     private static final String CONTENT = "%s,%s,%s,%s %s,%s %s,%s";
     private static final String BASE_DIRECTORY = "." + File.separator + "messages" + File.separator;
@@ -17,7 +17,7 @@ public class Message extends Entity implements FileEntity{
     private User receiver;
     private User sender;
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     public Message() {
     }
@@ -61,6 +61,7 @@ public class Message extends Entity implements FileEntity{
     public void setSender(User sender) {
         this.sender = sender;
     }
+
 
     @Override
     public String toString() {

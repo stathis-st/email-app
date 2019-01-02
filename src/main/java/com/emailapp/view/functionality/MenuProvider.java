@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public interface MenuProvider {
 
-    String ENTER_FROM_OPTIONS =  "Please choose one of the available options: %s ";
+    String ENTER_FROM_OPTIONS = "Please choose one of the available options: %s ";
     String NOT_A_NUMBER = "That's not a number!";
 
     default long provideSelectionMenu(Map<Long, String> availableOptions) {
