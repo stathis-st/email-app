@@ -9,10 +9,10 @@ import com.emailapp.view.functionality.MenuProvider;
 import com.emailapp.view.functionality.MessageEditor;
 import com.emailapp.view.functionality.MessagesRenderer;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class EditMessageView extends BaseView implements MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
 
@@ -29,8 +29,10 @@ public class EditMessageView extends BaseView implements MenuProvider, MessagesR
     @Override
     public void render() {
         clearConsole();
-        Map<Long, String> availableMessagesToEdit = messages.stream()
-                .collect(Collectors.toMap(Message::getId, Message::getMessageInfo));
+        Map<Long, String> availableMessagesToEdit = new LinkedHashMap<>();
+        for (Message message : messages) {
+            availableMessagesToEdit.put(message.getId(), message.getMessageInfo());
+        }
 
         long chosenId = provideSelectionMenu(availableMessagesToEdit);
 

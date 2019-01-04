@@ -75,11 +75,11 @@ public class Message extends Entity implements FileEntity {
     }
 
     public String getMessageInfo() {
-        return "Subject: " + subject + ", " +
-                "Message Content: " + messageData + ", " +
-                "Sender: " + sender.getFirstName() + " " + sender.getLastName() + ", " +
-                "Receiver: " + receiver.getFirstName() + " " + receiver.getLastName() + ", " +
-                "Date Of Submission: " + dateOfSubmission.format(FORMATTER);
+        return "Subject: " + subject + "\n\t" +
+                "Message Content: " + messageData + "\n\t" +
+                "Sender: " + sender.getFirstName() + " " + sender.getLastName() + "\n\t" +
+                "Receiver: " + receiver.getFirstName() + " " + receiver.getLastName() + "\n\t" +
+                "Date Of Submission: " + dateOfSubmission.format(FORMATTER) + "\n";
     }
 
     @Override

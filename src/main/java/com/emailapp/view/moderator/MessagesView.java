@@ -25,9 +25,10 @@ public class MessagesView extends BaseView implements MessagesRenderer {
 
     @Override
     public void showSpecificDetailsForMessage(Message message) {
-        String receiver = "From " + message.getReceiver().getFirstName() + " " + message.getReceiver().getLastName();
-        String sender = "To " + message.getSender().getFirstName() + " " + message.getSender().getLastName();
+        String receiver = "From: " + message.getReceiver().getFirstName() + " " + message.getReceiver().getLastName();
+        String sender = "To: " + message.getSender().getFirstName() + " " + message.getSender().getLastName();
         System.out.println(receiver);
         System.out.println(sender);
+        System.out.println();
     }
 }

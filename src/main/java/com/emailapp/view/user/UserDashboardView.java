@@ -12,7 +12,7 @@ public class UserDashboardView extends BaseView implements MenuProvider {
 
     private static final Map<Long, String> AVAILABLE_OPTIONS = new LinkedHashMap<>();
 
-    {
+    static {
         AVAILABLE_OPTIONS.put(1L, "Received");
         AVAILABLE_OPTIONS.put(2L, "Sent");
         AVAILABLE_OPTIONS.put(3L, "Compose");

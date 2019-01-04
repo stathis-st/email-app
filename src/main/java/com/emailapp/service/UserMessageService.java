@@ -4,16 +4,11 @@ import com.emailapp.domain.Message;
 import com.emailapp.domain.User;
 import com.emailapp.domain.UserMessage;
 import com.emailapp.exception.NotFoundException;
-import com.emailapp.repository.FileRepository;
-import com.emailapp.repository.FileRepositoryImpl;
-import com.emailapp.repository.MessageRepository;
-import com.emailapp.repository.MessageRepositoryImpl;
-import com.emailapp.repository.UserMessageRepository;
-import com.emailapp.repository.UserRepository;
-import com.emailapp.repository.UserRepositoryImpl;
+import com.emailapp.repository.*;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,7 +54,7 @@ public class UserMessageService {
                     messages.forEach(message -> message.setReceiver(user));
                     return messages;
                 })
-                .flatMap(Collection::stream)
+                .flatMap(Collection::stream).sorted(Comparator.comparing(Message::getDateOfSubmission))
                 .collect(Collectors.toList());
     }
 

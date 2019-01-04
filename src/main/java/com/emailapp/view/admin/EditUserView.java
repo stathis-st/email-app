@@ -26,7 +26,6 @@ public class EditUserView extends BaseView implements MenuProvider, UserEditor, 
         this.registeredUsers = registeredUsers;
     }
 
-
     @Override
     public void render() {
         clearConsole();
@@ -75,10 +74,10 @@ public class EditUserView extends BaseView implements MenuProvider, UserEditor, 
     @Override
     public void showUser(User user) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(user.getId()).append("\t")
-                .append(user.getPassword()).append("\t")
-                .append(user.getFirstName()).append("\t")
-                .append(user.getLastName());
+        stringBuilder.append("User Id: ").append(user.getId()).append(", ")
+                .append("Password: ").append(user.getPassword()).append(", ")
+                .append("First Name: ").append(user.getFirstName()).append(", ")
+                .append("Last Name: ").append(user.getLastName());
         System.out.println(stringBuilder);
     }
 }

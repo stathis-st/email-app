@@ -9,9 +9,9 @@ import com.emailapp.view.functionality.MenuProvider;
 import com.emailapp.view.functionality.MessageEditor;
 import com.emailapp.view.functionality.MessagesRenderer;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class DeleteMessageView extends BaseView implements MenuProvider, MessagesRenderer, MessageEditor, ExceptionResolver {
 
@@ -28,8 +28,11 @@ public class DeleteMessageView extends BaseView implements MenuProvider, Message
     @Override
     public void render() {
         clearConsole();
-        Map<Long, String> availableMessagesToDelete = messages.stream()
-                .collect(Collectors.toMap(Message::getId, Message::getMessageInfo));
+        Map<Long, String> availableMessagesToDelete = new LinkedHashMap<>();
+        for (Message message : messages) {
+            availableMessagesToDelete.put(message.getId(), message.getMessageInfo());
+        }
+
         long chosenId = provideSelectionMenu(availableMessagesToDelete);
         try {
             deleteModeratorController.postDeleteMessage(sessionUser, chosenId);

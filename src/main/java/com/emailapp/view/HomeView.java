@@ -13,7 +13,7 @@ public class HomeView extends BaseView implements MenuProvider {
     private static final String EXIT_THE_APPLICATION_OPTION = "Exit the application";
     private static final Map<Long, String> AVAILABLE_OPTIONS = new LinkedHashMap<>();
 
-    {
+    static {
         AVAILABLE_OPTIONS.put(1L, LOGIN_OPTION);
         AVAILABLE_OPTIONS.put(2L, EXIT_THE_APPLICATION_OPTION);
     }

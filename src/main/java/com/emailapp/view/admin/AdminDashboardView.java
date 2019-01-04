@@ -12,7 +12,7 @@ public class AdminDashboardView extends BaseView implements MenuProvider {
 
     private static final Map<Long, String> AVAILABLE_OPTIONS = new LinkedHashMap<>();
 
-    {
+    static {
         AVAILABLE_OPTIONS.put(1L, "Register a new User");
         AVAILABLE_OPTIONS.put(2L, "View all users");
         AVAILABLE_OPTIONS.put(3L, "Edit User's info");
